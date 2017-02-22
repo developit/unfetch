@@ -3,11 +3,11 @@ export default function fetch(url, options) {
 	return new Promise( (resolve, reject) => {
 		let request = new XMLHttpRequest();
 
+		request.open(options.method || 'get', url);
+
 		for (let i in options.headers) {
 			request.setRequestHeader(i, options.headers[i]);
 		}
-
-		request.open(options.method || 'get', url);
 
 		request.onload = () => {
 			resolve(response(request));
