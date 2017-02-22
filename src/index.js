@@ -9,6 +9,10 @@ export default function fetch(url, options) {
 			request.setRequestHeader(i, options.headers[i]);
 		}
 
+		if (options.credentials === 'include') {
+			request.withCredentials = true;
+		}
+
 		request.onload = () => {
 			resolve(response(request));
 		};
