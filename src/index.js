@@ -29,7 +29,8 @@ export default function fetch(url, options) {
 			while ((match=reg.exec(headerText))) {
 				keys.push(key = match[1].toLowerCase());
 				all.push([key, match[2]]);
-				headers[key] = (headers[key]?(headers[key]+','):'') + match[2];
+				const header = headers[key]
+				headers[key] = (header?(header+','):'') + match[2];
 			}
 
 			return {
