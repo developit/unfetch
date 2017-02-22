@@ -6,7 +6,7 @@ const response = (xhr) => {
 		reg = /^\s*(.*?)\s*\:\s*([\s\S]*?)\s*$/gm;
 
 	let res;
-	while (res = reg.exec(text)) {
+	while ((res = reg.exec(text))) {
 		const k = res[1].toLowerCase(), h = headers[k], v = res[2];
 		keys.push(k);
 		all.push([k, v]);
