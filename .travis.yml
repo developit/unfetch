@@ -5,7 +5,7 @@ install:
   - npm install -g phantomjs
   - npm install
 script:
-  - git submodules update 
+  - git submodule update 
   - npm test
   - npm run build
   - cp dist/unfetch.umd.js fetch/fetch.js
