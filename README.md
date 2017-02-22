@@ -105,7 +105,7 @@ Now, take a moment to be sure your contributions make sense to everyone else.
 ### Reporting Issues
 
 Found a problem? Want a new feature? First of all see if your issue or idea has [already been reported](../../issues).
-If don't, just open a [new clear and descriptive issue](../../issues/new).
+If it hasn't, just open a [new clear and descriptive issue](../../issues/new).
 
 ### Submitting pull requests
 
