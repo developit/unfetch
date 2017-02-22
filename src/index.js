@@ -47,7 +47,7 @@ export default function fetch(url, options) {
 					keys: () => keys,
 					entries: () => all,
 					get: n => headers[n.toLowerCase()],
-					has: n => !!headers[n.toLowerCase()]
+					has: n => n.toLowerCase() in headers
 				}
 			};
 		}
