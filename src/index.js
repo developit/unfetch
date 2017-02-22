@@ -25,12 +25,12 @@ export default function fetch(url, options) {
 				all = [],
 				headers = {},
 				reg = /^\s*(.*?)\s*\:\s*([\s\S]*?)\s*$/gm,
-				match, key;
+				match, header, key;
 			while ((match=reg.exec(headerText))) {
 				keys.push(key = match[1].toLowerCase());
 				all.push([key, match[2]]);
-				const header = headers[key]
-				headers[key] = (header?(header+','):'') + match[2];
+				header = headers[key];
+				headers[key] = header ? `${header},${match[2]}` : match[2];
 			}
 
 			return {
