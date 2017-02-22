@@ -75,11 +75,27 @@ fetch('/foo.json')
 
 ## Examples & Demos
 
-_Coming soon!_
+```js
+// simple GET request:
+fetch('/foo')
+  .then( r => r.text() )
+  .then( txt => console.log(txt) )
+
+
+// complex POST request with JSON, headers:
+fetch('/bear', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ hungry: true })
+}).then( r => {
+  open(r.headers.get('location'));
+  return r.json();
+})
+```
 
 * * *
-
-## API
 
 ## Contribute
 
