@@ -54,26 +54,30 @@ var fetch = require('unfetch')
 The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
 
 ```html
-<script src="https://unpkg.com/unfetch/dist/unfetch.umd.js"></script>
+<script src="//unpkg.com/unfetch/dist/unfetch.umd.js"></script>
 ```
 
-This exposes a `fetch` global if not already present.
+This exposes the `unfetch()` function as a global.
 
 * * *
 
 ## Usage
 
+As a [**ponyfill**](https://ponyfill.com):
+
 ```js
-import fetch from 'unfetch'
+import fetch from 'unfetch';
 
 fetch('/foo.json')
   .then( r => r.json() )
   .then( data => {
-    console.log(data)
-  })
+    console.log(data);
+  });
 ```
 
 ## Examples & Demos
+
+[**Real Example on JSFiddle**](https://jsfiddle.net/developit/qrh7tLc0/) ➡️
 
 ```js
 // simple GET request:
