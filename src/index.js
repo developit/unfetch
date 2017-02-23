@@ -10,20 +10,21 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 		}
 
 		request.onload = () => {
-			resolve(response(request));
+			resolve(response());
 		};
 
 		request.onerror = reject;
 
 		request.send(options.body);
 
-		function response(xhr) {
-			let headerText = xhr.getAllResponseHeaders(),
+		function response() {
+			let headerText = request.getAllResponseHeaders(),
 				keys = [],
 				all = [],
 				headers = {},
 				reg = /^\s*(.*?)\s*\:\s*([\s\S]*?)\s*$/gm,
 				match, header, key;
+
 			while ((match=reg.exec(headerText))) {
 				keys.push(key = match[1].toLowerCase());
 				all.push([key, match[2]]);
@@ -32,16 +33,14 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 			}
 
 			return {
-				type: 'cors',
-				ok: xhr.status/200|0 == 1,		// 200-399
-				status: xhr.status,
-				statusText: xhr.statusText,
-				url: xhr.responseURL,
-				clone: () => response(xhr),
-				text: () => Promise.resolve(xhr.responseText),
-				json: () => Promise.resolve(xhr.responseText).then(JSON.parse),
-				xml: () => Promise.resolve(xhr.responseXML),
-				blob: () => Promise.resolve(xhr.response),
+				ok: request.status/200|0 == 1,		// 200-399
+				status: request.status,
+				statusText: request.statusText,
+				url: request.responseURL,
+				clone: () => response(request),
+				text: () => Promise.resolve(request.responseText),
+				json: () => Promise.resolve(request.responseText).then(JSON.parse),
+				xml: () => Promise.resolve(request.responseXML),
 				headers: {
 					keys: () => keys,
 					entries: () => all,
