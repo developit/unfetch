@@ -35,7 +35,7 @@ export default function fetch(url, options) {
 
 			return {
 				type: 'cors',
-				ok: xhr.status/200|0 == 1,		// 200-399
+				ok: (xhr.status >= 200) && (xhr.status < 400),
 				status: xhr.status,
 				statusText: xhr.statusText,
 				url: xhr.responseURL,
