@@ -41,6 +41,7 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 				text: () => Promise.resolve(request.responseText),
 				json: () => Promise.resolve(request.responseText).then(JSON.parse),
 				xml: () => Promise.resolve(request.responseXML),
+				blob: () => Promise.resolve(new Blob([request.response])),
 				headers: {
 					keys: () => keys,
 					entries: () => all,
