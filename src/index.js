@@ -15,7 +15,7 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 
 		request.onerror = reject;
 
-		request.send(options.body || null);
+		request.send(options.body);
 
 		function response(xhr) {
 			let headerText = xhr.getAllResponseHeaders(),
