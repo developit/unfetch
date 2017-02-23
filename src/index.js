@@ -13,9 +13,7 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 			resolve(response(request));
 		};
 
-		request.onerror = () => {
-			reject(Error('Network Error'));
-		};
+		request.onerror = reject;
 
 		request.send(options.body || null);
 
