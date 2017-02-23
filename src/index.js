@@ -22,7 +22,7 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 				keys = [],
 				all = [],
 				headers = {},
-				reg = /^(.*?):\s*([\s\S]*)$/gm,
+				reg = /^(.*?):\s*([\s\S]*?)$/gm,
 				match, header, key;
 
 			while ((match=reg.exec(headerText))) {
