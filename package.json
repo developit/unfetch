@@ -31,7 +31,8 @@
   "license": "MIT",
   "files": [
     "src",
-    "dist"
+    "dist",
+    "polyfill.js"
   ],
   "eslintConfig": {
     "parser": "babel-eslint",
