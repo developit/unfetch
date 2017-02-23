@@ -17,6 +17,13 @@ export default function fetch(url, options) {
 			reject(Error('Network Error'));
 		};
 
+		request.ontimeout = () => {
+			request.abort();
+			reject(Error('Timed out'));
+		};
+
+		request.timeout = options.timeout || 30000;  // set default 30sec timeout to requests
+
 		request.send(options.body || null);
 
 		function response(xhr) {
