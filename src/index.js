@@ -1,5 +1,4 @@
-export default function fetch(url, options) {
-	options = options || {};
+export default function fetch(url, options = {}) {
 	return new Promise( (resolve, reject) => {
 		let request = new XMLHttpRequest();
 
