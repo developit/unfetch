@@ -1,12 +1,11 @@
-export default function fetch(url, options) {
-	options = options || {};
+export default function fetch(url, { method = 'get', headers = {}, body = null }) {
 	return new Promise( (resolve, reject) => {
 		let request = new XMLHttpRequest();
 
-		request.open(options.method || 'get', url);
+		request.open(method, url);
 
-		for (let i in options.headers) {
-			request.setRequestHeader(i, options.headers[i]);
+		for (let i in headers) {
+			request.setRequestHeader(i, headers[i]);
 		}
 
 		request.onload = () => {
@@ -17,7 +16,7 @@ export default function fetch(url, options) {
 			reject(Error('Network Error'));
 		};
 
-		request.send(options.body || null);
+		request.send(body);
 
 		function response(xhr) {
 			let headerText = xhr.getAllResponseHeaders(),
