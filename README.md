@@ -8,18 +8,17 @@
 
 > Tiny 500b fetch "barely-polyfill"
 
--   **Tiny:** under **500 bytes** of gzipped ES3
+-   **Tiny:** under **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
 -   **Minimal:** just `fetch()` with headers and text/json/xml responses
 -   **Familiar:** a subset of the full API
 -   **Supported:** supports IE8+ (<abbr title="Bring Your Own Promises">BYOP</abbr>)
 -   **Standalone:** one function, no dependencies
--   **Modern:** written in ES2015, transpiled to ES3.
+-   **Modern:** written in ES2015, transpiled to 500b of old-school JS
 
 > 🤔 **What's Missing?**
 >
 > -   Uses simple Arrays instead of Iterables, since Arrays _are_ iterables
 > -   No streaming, just Promisifies existing XMLHttpRequest response bodies
-> -   Bare-bones `.blob()` implementation - just proxies `xhr.response`
 
 * * *
 
