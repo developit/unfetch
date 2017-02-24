@@ -18,19 +18,17 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 		request.send(options.body);
 
 		function response() {
-			let headerText = request.getAllResponseHeaders(),
-				keys = [],
+			let keys = [],
 				all = [],
 				headers = {},
-				reg = /^(.*?):\s*([\s\S]*?)$/gm,
-				match, header, key;
+				header;
 
-			while ((match=reg.exec(headerText))) {
-				keys.push(key = match[1].toLowerCase());
-				all.push([key, match[2]]);
+			request.getAllResponseHeaders().replace(/^(.*?):\s*([\s\S]*?)$/gm, (m, key, value) => {
+				keys.push(key = key.toLowerCase());
+				all.push([key, value]);
 				header = headers[key];
-				headers[key] = header ? `${header},${match[2]}` : match[2];
-			}
+				headers[key] = header ? `${header},${value}` : value;
+			});
 
 			return {
 				ok: (request.status/200|0) == 1,		// 200-399
