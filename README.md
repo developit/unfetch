@@ -8,17 +8,17 @@
 
 > Tiny 500b fetch "barely-polyfill"
 
--   **Tiny:** weighs about **500 bytes** gzipped
+-   **Tiny:** under **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
 -   **Minimal:** just `fetch()` with headers and text/json/xml responses
 -   **Familiar:** a subset of the full API
 -   **Supported:** supports IE8+ (<abbr title="Bring Your Own Promises">BYOP</abbr>)
 -   **Standalone:** one function, no dependencies
+-   **Modern:** written in ES2015, transpiled to 500b of old-school JS
 
 > 🤔 **What's Missing?**
 >
 > -   Uses simple Arrays instead of Iterables, since Arrays _are_ iterables
 > -   No streaming, just Promisifies existing XMLHttpRequest response bodies
-> -   Bare-bones `.blob()` implementation - just proxies `xhr.response`
 
 * * *
 
@@ -75,6 +75,20 @@ fetch('/foo.json')
   });
 ```
 
+Globally, as a [**polyfill**](https://ponyfill.com/#polyfill):
+
+```js
+import 'unfetch/polyfill';
+
+// "fetch" is now installed globally if it wasn't already available
+
+fetch('/foo.json')
+  .then( r => r.json() )
+  .then( data => {
+    console.log(data);
+  });
+```
+
 ## Examples & Demos
 
 [**Real Example on JSFiddle**](https://jsfiddle.net/developit/qrh7tLc0/) ➡️
@@ -120,12 +134,18 @@ If it hasn't, just open a [new clear and descriptive issue](../../issues/new).
 
 Pull requests are the greatest contributions, so be sure they are focused in scope, and do avoid unrelated commits.
 
+> 💁 **Remember: size is the #1 priority.**
+>
+> Every byte counts! PR's can't be merged if they increase the output size much.
+
 -   Fork it!
 -   Clone your fork: `git clone https://github.com/<your-username>/unfetch`
 -   Navigate to the newly cloned directory: `cd unfetch`
 -   Create a new branch for the new feature: `git checkout -b my-new-feature`
 -   Install the tools necessary for development: `npm install`
 -   Make your changes.
+-   `npm run build` to verify your change doesn't increase output size.
+-   `npm test` to make sure your change doesn't break anything.
 -   Commit your changes: `git commit -am 'Add some feature'`
 -   Push to the branch: `git push origin my-new-feature`
 -   Submit a pull request with full remarks documenting your changes.
