@@ -75,7 +75,7 @@ fetch('/foo.json')
   });
 ```
 
-Globally, as a [**polyfill**](https://ponyfill.com):
+Globally, as a [**polyfill**](https://ponyfill.com/#polyfill):
 
 ```js
 import 'unfetch/polyfill';
