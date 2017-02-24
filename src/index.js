@@ -37,7 +37,7 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 				status: request.status,
 				statusText: request.statusText,
 				url: request.responseURL,
-				clone: () => response(request),
+				clone: response,
 				text: () => Promise.resolve(request.responseText),
 				json: () => Promise.resolve(request.responseText).then(JSON.parse),
 				xml: () => Promise.resolve(request.responseXML),
