@@ -8,11 +8,12 @@
 
 > Tiny 500b fetch "barely-polyfill"
 
--   **Tiny:** weighs about **500 bytes** gzipped
+-   **Tiny:** under **500 bytes** of gzipped ES3
 -   **Minimal:** just `fetch()` with headers and text/json/xml responses
 -   **Familiar:** a subset of the full API
 -   **Supported:** supports IE8+ (<abbr title="Bring Your Own Promises">BYOP</abbr>)
 -   **Standalone:** one function, no dependencies
+-   **Modern:** written in ES2015, transpiled to ES3.
 
 > 🤔 **What's Missing?**
 >
