@@ -75,6 +75,20 @@ fetch('/foo.json')
   });
 ```
 
+Globally, as a [**polyfill**](https://ponyfill.com/#polyfill):
+
+```js
+import 'unfetch/polyfill';
+
+// "fetch" is now installed globally if it wasn't already available
+
+fetch('/foo.json')
+  .then( r => r.json() )
+  .then( data => {
+    console.log(data);
+  });
+```
+
 ## Examples & Demos
 
 [**Real Example on JSFiddle**](https://jsfiddle.net/developit/qrh7tLc0/) ➡️
