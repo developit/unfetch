@@ -1,4 +1,4 @@
-export default function fetch(url, options) {
+export default typeof fetch=='function' ? fetch : function(url, options) {
 	options = options || {};
 	return new Promise( (resolve, reject) => {
 		let request = new XMLHttpRequest();
@@ -14,44 +14,41 @@ export default function fetch(url, options) {
 		}
 
 		request.onload = () => {
-			resolve(response(request));
+			resolve(response());
 		};
 
-		request.onerror = () => {
-			reject(Error('Network Error'));
-		};
+		request.onerror = reject;
 
-		request.send(options.body || null);
+		request.send(options.body);
 
-		function response(xhr) {
-			let headerText = xhr.getAllResponseHeaders(),
-				keys = [],
+		function response() {
+			let keys = [],
 				all = [],
 				headers = {},
-				reg = /^\s*(.*?)\s*\:\s*([\s\S]*?)\s*$/gm,
-				match, key;
-			while ((match=reg.exec(headerText))) {
-				keys.push(key = match[1].toLowerCase());
-				all.push([key, match[2]]);
-				headers[key] = (headers[key]?(headers[key]+','):'') + match[2];
-			}
+				header;
+
+			request.getAllResponseHeaders().replace(/^(.*?):\s*([\s\S]*?)$/gm, (m, key, value) => {
+				keys.push(key = key.toLowerCase());
+				all.push([key, value]);
+				header = headers[key];
+				headers[key] = header ? `${header},${value}` : value;
+			});
 
 			return {
-				type: 'cors',
-				ok: xhr.status/200|0 == 1,		// 200-399
-				status: xhr.status,
-				statusText: xhr.statusText,
-				url: xhr.responseURL,
-				clone: () => response(xhr),
-				text: () => Promise.resolve(xhr.responseText),
-				json: () => Promise.resolve(xhr.responseText).then(JSON.parse),
-				xml: () => Promise.resolve(xhr.responseXML),
-				blob: () => Promise.resolve(xhr.response),
+				ok: (request.status/200|0) == 1,		// 200-399
+				status: request.status,
+				statusText: request.statusText,
+				url: request.responseURL,
+				clone: response,
+				text: () => Promise.resolve(request.responseText),
+				json: () => Promise.resolve(request.responseText).then(JSON.parse),
+				xml: () => Promise.resolve(request.responseXML),
+				blob: () => Promise.resolve(new Blob([request.response])),
 				headers: {
 					keys: () => keys,
 					entries: () => all,
 					get: n => headers[n.toLowerCase()],
-					has: n => !!headers[n.toLowerCase()]
+					has: n => n.toLowerCase() in headers
 				}
 			};
 		}

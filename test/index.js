@@ -44,7 +44,7 @@ describe('unfetch', () => {
 
 					expect(xhr.setRequestHeader).to.have.been.calledOnce.and.calledWith('a', 'b');
 					expect(xhr.open).to.have.been.calledOnce.and.calledWith('get', '/foo');
-					expect(xhr.send).to.have.been.calledOnce.and.calledWith(null);
+					expect(xhr.send).to.have.been.calledOnce.and.calledWith();
 
 					delete global.XMLHttpRequest;
 				});
