@@ -5,9 +5,14 @@ export default {
 	useStrict: false,
 	plugins: [
 		buble(),
-		replace({
-			'module.exports = index;': '',
-			'var index =': 'module.exports ='
-		})
+		replace(
+			process.env.FORMAT==='cjs' ? {
+				'module.exports = index;': '',
+				'var index =': 'module.exports ='
+			} : {
+				'return index;': '',
+				'var index =': 'return'
+			}
+		)
 	]
 };
