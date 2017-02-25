@@ -1,7 +1,7 @@
 {
   "name": "unfetch",
-  "version": "2.0.0",
-  "description": "Bare minimum 500b fetch polyfill.",
+  "version": "2.0.1",
+  "description": "Bare minimum fetch polyfill in 500 bytes",
   "module": "src/index.js",
   "jsnext:main": "src/index.js",
   "main": "dist/unfetch.js",
