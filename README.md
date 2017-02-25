@@ -11,7 +11,7 @@
 -   **Tiny:** under **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
 -   **Minimal:** just `fetch()` with headers and text/json/xml responses
 -   **Familiar:** a subset of the full API
--   **Supported:** supports IE8+ (<abbr title="Bring Your Own Promises">BYOP</abbr>)
+-   **Supported:** supports IE8+ _(assuming `Promise` is polyfilled of course!)_
 -   **Standalone:** one function, no dependencies
 -   **Modern:** written in ES2015, transpiled to 500b of old-school JS
 
