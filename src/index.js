@@ -9,6 +9,8 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 			request.setRequestHeader(i, options.headers[i]);
 		}
 
+		request.withCredentials = options.credentials != 'omit';
+
 		request.onload = () => {
 			resolve(response());
 		};
