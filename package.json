@@ -1,6 +1,6 @@
 {
   "name": "unfetch",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Bare minimum fetch polyfill in 500 bytes",
   "main": "dist/unfetch.js",
   "module": "dist/unfetch.es.js",
