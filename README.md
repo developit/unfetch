@@ -113,9 +113,9 @@ fetch('/bear', {
 })
 ```
 
-### Caveats
+## Caveats
 
-_Adopted from the GitHub fetch polyfill [**readme**](https://github.com/github/fetch#caveats)_
+_Adapted from the GitHub fetch polyfill [**readme**](https://github.com/github/fetch#caveats)._
 
 The `fetch` specification differs from `jQuery.ajax()` in mainly two ways that
 bear keeping in mind:
