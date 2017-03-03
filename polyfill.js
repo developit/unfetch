@@ -1,1 +1,1 @@
-if (!window.fetch) window.fetch = require('unfetch').default || require('unfetch');
+if (!window.fetch) window.fetch = require('.').default || require('.');
