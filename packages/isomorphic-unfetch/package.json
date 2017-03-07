@@ -1,0 +1,10 @@
+{
+  "name": "isomorphic-unfetch",
+  "description": "Switches between unfetch & node-fetch for client & server.",
+  "browser": "browser.js",
+  "main": "index.js",
+  "dependencies": {
+    "node-fetch": "^1.6.3",
+    "unfetch": "^2.1.0"
+  }
+}
