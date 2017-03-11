@@ -8,17 +8,17 @@
 
 > Tiny 500b fetch "barely-polyfill"
 
--   **Tiny:** weighs about **500 bytes** gzipped
+-   **Tiny:** under **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
 -   **Minimal:** just `fetch()` with headers and text/json/xml responses
 -   **Familiar:** a subset of the full API
--   **Supported:** supports IE8+ (<abbr title="Bring Your Own Promises">BYOP</abbr>)
+-   **Supported:** supports IE8+ _(assuming `Promise` is polyfilled of course!)_
 -   **Standalone:** one function, no dependencies
+-   **Modern:** written in ES2015, transpiled to 500b of old-school JS
 
 > 🤔 **What's Missing?**
 >
 > -   Uses simple Arrays instead of Iterables, since Arrays _are_ iterables
 > -   No streaming, just Promisifies existing XMLHttpRequest response bodies
-> -   Bare-bones `.blob()` implementation - just proxies `xhr.response`
 
 * * *
 
@@ -54,26 +54,44 @@ var fetch = require('unfetch')
 The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
 
 ```html
-<script src="https://unpkg.com/unfetch/dist/unfetch.umd.js"></script>
+<script src="//unpkg.com/unfetch/dist/unfetch.umd.js"></script>
 ```
 
-This exposes a `fetch` global if not already present.
+This exposes the `unfetch()` function as a global.
 
 * * *
 
 ## Usage
 
+As a [**ponyfill**](https://ponyfill.com):
+
 ```js
-import fetch from 'unfetch'
+import fetch from 'unfetch';
 
 fetch('/foo.json')
   .then( r => r.json() )
   .then( data => {
-    console.log(data)
-  })
+    console.log(data);
+  });
+```
+
+Globally, as a [**polyfill**](https://ponyfill.com/#polyfill):
+
+```js
+import 'unfetch/polyfill';
+
+// "fetch" is now installed globally if it wasn't already available
+
+fetch('/foo.json')
+  .then( r => r.json() )
+  .then( data => {
+    console.log(data);
+  });
 ```
 
 ## Examples & Demos
+
+[**Real Example on JSFiddle**](https://jsfiddle.net/developit/qrh7tLc0/) ➡️
 
 ```js
 // simple GET request:
@@ -95,6 +113,50 @@ fetch('/bear', {
 })
 ```
 
+## Caveats
+
+_Adapted from the GitHub fetch polyfill [**readme**](https://github.com/github/fetch#caveats)._
+
+The `fetch` specification differs from `jQuery.ajax()` in mainly two ways that
+bear keeping in mind:
+
+* By default, `fetch` **won't send or receive any cookies** from the server,
+  resulting in unauthenticated requests if the site relies on maintaining a user
+  session.
+
+```javascript
+fetch('/users', {
+  credentials: 'include'
+});
+```
+
+* The Promise returned from `fetch()` **won't reject on HTTP error status**
+  even if the response is an HTTP 404 or 500. Instead, it will resolve normally,
+  and it will only reject on network failure or if anything prevented the
+  request from completing.
+
+  To have `fetch` Promise reject on HTTP error statuses, i.e. on any non-2xx
+  status, define a custom response handler:
+
+```javascript
+fetch('/users')
+  .then( checkStatus )
+  .then( r => r.json() )
+  .then( data => {
+    console.log(data);
+  });
+
+function checkStatus(response) {
+  if (response.ok) {
+    return response;
+  } else {
+    var error = new Error(response.statusText);
+    error.response = response;
+    return Promise.reject(error);
+  }
+}
+```
+
 * * *
 
 ## Contribute
@@ -111,12 +173,18 @@ If it hasn't, just open a [new clear and descriptive issue](../../issues/new).
 
 Pull requests are the greatest contributions, so be sure they are focused in scope, and do avoid unrelated commits.
 
+> 💁 **Remember: size is the #1 priority.**
+>
+> Every byte counts! PR's can't be merged if they increase the output size much.
+
 -   Fork it!
 -   Clone your fork: `git clone https://github.com/<your-username>/unfetch`
 -   Navigate to the newly cloned directory: `cd unfetch`
 -   Create a new branch for the new feature: `git checkout -b my-new-feature`
 -   Install the tools necessary for development: `npm install`
 -   Make your changes.
+-   `npm run build` to verify your change doesn't increase output size.
+-   `npm test` to make sure your change doesn't break anything.
 -   Commit your changes: `git commit -am 'Add some feature'`
 -   Push to the branch: `git push origin my-new-feature`
 -   Submit a pull request with full remarks documenting your changes.

@@ -1,39 +1,4 @@
-const response = (xhr) => {
-	const text = xhr.getAllResponseHeaders(),
-		keys = [],
-		all = [],
-		headers = {},
-		reg = /^\s*(.*?)\s*\:\s*([\s\S]*?)\s*$/gm;
-
-	let res;
-	while ((res = reg.exec(text))) {
-		const k = res[1].toLowerCase(), h = headers[k], v = res[2];
-		keys.push(k);
-		all.push([k, v]);
-		headers[k] = (h ? `${h},` : '') + v;
-	}
-
-	return {
-		type: 'cors',
-		ok: xhr.status / 200 | 0 == 1, // 200-399
-		status: xhr.status,
-		statusText: xhr.statusText,
-		url: xhr.responseURL,
-		clone: () => response(xhr),
-		text: () => Promise.resolve(xhr.responseText),
-		json: () => Promise.resolve(xhr.responseText).then(JSON.parse),
-		xml: () => Promise.resolve(xhr.responseXML),
-		blob: () => Promise.resolve(xhr.response),
-		headers: {
-			keys: () => keys,
-			entries: () => all,
-			get: n => headers[n.toLowerCase()],
-			has: n => n.toLowerCase() in headers
-		}
-	};
-};
-
-export default function fetch(url, options) {
+export default typeof fetch=='function' ? fetch : function(url, options) {
 	options = options || {};
 	return new Promise((resolve, reject) => {
 		const request = new XMLHttpRequest();
@@ -43,13 +8,46 @@ export default function fetch(url, options) {
 			request.setRequestHeader(i, options.headers[i]);
 		}
 
-		request.onload = () => {
-			resolve(response(request));
-		}
-		request.onerror = () => {
-			reject(Error('Network Error'));
-		}
+		request.withCredentials = options.credentials=='include';
 
-		request.send(options.body || null);
+		request.onload = () => {
+			resolve(response());
+		};
+
+		request.onerror = reject;
+
+		request.send(options.body);
+
+		function response() {
+			let keys = [],
+				all = [],
+				headers = {},
+				header;
+
+			request.getAllResponseHeaders().replace(/^(.*?):\s*([\s\S]*?)$/gm, (m, key, value) => {
+				keys.push(key = key.toLowerCase());
+				all.push([key, value]);
+				header = headers[key];
+				headers[key] = header ? `${header},${value}` : value;
+			});
+
+			return {
+				ok: (request.status/200|0) == 1,		// 200-399
+				status: request.status,
+				statusText: request.statusText,
+				url: request.responseURL,
+				clone: response,
+				text: () => Promise.resolve(request.responseText),
+				json: () => Promise.resolve(request.responseText).then(JSON.parse),
+				xml: () => Promise.resolve(request.responseXML),
+				blob: () => Promise.resolve(new Blob([request.response])),
+				headers: {
+					keys: () => keys,
+					entries: () => all,
+					get: n => headers[n.toLowerCase()],
+					has: n => n.toLowerCase() in headers
+				}
+			};
+		}
 	});
 }
