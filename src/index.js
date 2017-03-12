@@ -3,12 +3,12 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 	return new Promise((resolve, reject) => {
 		const response = () => {
 			const keys = [], all = [], headers = {};
+			let header;
 
-			request.getAllResponseHeaders().replace(/^(.+):\s*(.+)$/gm, (m, key, value) => {
+			request.getAllResponseHeaders().replace(/^(.+):\s(.+)$/gm, (m, key, value) => {
 				keys.push(key = key.toLowerCase());
 				all.push([key, value]);
-				const header = headers[key];
-				headers[key] = header ? `${header},${value}` : value;
+				headers[key] = (header = headers[key]) ? `${header},${value}` : value;
 			});
 
 			return {
