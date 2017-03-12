@@ -4,7 +4,7 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 		const response = () => {
 			const keys = [], all = [], headers = {};
 
-			request.getAllResponseHeaders().replace(/^(.*?):\s*([\s\S]*?)$/gm, (m, key, value) => {
+			request.getAllResponseHeaders().replace(/^(.+):\s*(.+)$/gm, (m, key, value) => {
 				keys.push(key = key.toLowerCase());
 				all.push([key, value]);
 				const header = headers[key];
