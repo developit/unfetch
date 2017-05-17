@@ -99,8 +99,13 @@ fetch('/foo.json')
 fetch('/foo')
   .then( r => r.text() )
   .then( txt => console.log(txt) )
-
-
+  
+// set custom timeout on request
+fetch('/baz', { timeout: 1500 }) // 150ms timeout
+    .then(r => r.text())
+    .then(txt => console.log(txt))
+    .catch(e => console.log(e.message)) // Would be rejected by "Timed out"
+    
 // complex POST request with JSON, headers:
 fetch('/bear', {
   method: 'POST',

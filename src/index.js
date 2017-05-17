@@ -17,6 +17,13 @@ export default typeof fetch=='function' ? fetch : function(url, options) {
 
 		request.onerror = reject;
 
+		request.ontimeout = () => {
+			request.abort();
+			reject(Error('Timed out'));
+		};
+
+		request.timeout = options.timeout || 30000;  // set default 30sec timeout to requests
+
 		request.send(options.body);
 
 		function response() {
