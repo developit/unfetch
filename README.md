@@ -134,14 +134,17 @@ Unfetch will account for the following properties in `options`:
 These methods are used to handle the response accordingly in your Promise chain. Instead of implementing full spec-compliant [Response Class](https://fetch.spec.whatwg.org/#response-class) functionality, Unfetch provides the following methods and attributes:
 
 #### `response.ok`
-Returns `true` if the request received a status in the `OK` range. 
-> ⚠ Unfetch considers any status in the range of `200` to `399` as `OK`, differing from [the spec which categorizes some statuses in that range as `redirect`](https://fetch.spec.whatwg.org/#statuses). 
+Returns `true` if the request received a status in the `OK` range (200-299).
+
 #### `response.status`
 Contains the status code of the response, e.g. `404` for a not found resource, `200` for a success.
+
 #### `response.statusText`
 A message related to the `status` attribute, e.g. `OK` for a status `200`.
+
 #### `response.clone()`
 Will return another `Object` with the same shape and content as `response`.
+
 #### `response.text()`, `response.json()`, `response.xml()`, `response.blob()`
 Will return the response content as plain text, JSON, XML and `Blob`, respectively.
 
