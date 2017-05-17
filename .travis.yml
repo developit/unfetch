@@ -1,3 +1,14 @@
 language: node_js
 node_js:
   - 6
+install:
+  - npm install -g phantomjs
+  - npm install
+script:
+  - git submodule update 
+  - npm test
+  - npm run build
+  - cp dist/unfetch.umd.js fetch/fetch.js
+  - cd fetch
+  - echo '/* jshint ignore:start */' | cat - fetch.js > temp && mv temp fetch.js
+  - npm test
