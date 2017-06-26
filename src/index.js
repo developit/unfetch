@@ -1,4 +1,4 @@
-export default typeof fetch=='function' ? fetch : function(url, options) {
+export default typeof fetch == 'function' && typeof window != 'undefined' ? fetch.bind(window) : function(url, options) {
 	options = options || {};
 	return new Promise( (resolve, reject) => {
 		let request = new XMLHttpRequest();

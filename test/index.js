@@ -2,12 +2,29 @@ import fetch from '../src';
 import chai, { expect } from 'chai';
 import { spy, stub } from 'sinon';
 import sinonChai from 'sinon-chai';
-chai.use(sinonChai);
+import { transformFileSync } from 'babel-core';
+import vm from 'vm';
 
+chai.use(sinonChai);
 
 describe('unfetch', () => {
 	it('should be a function', () => {
 		expect(fetch).to.be.a('function');
+	});
+
+	// Prevents illegal invocation errors
+	// See https://github.com/developit/unfetch/issues/46
+	it('should bind the native fetch on window', () => {
+		const filename = require.resolve('../src');
+		const sandbox = {
+			window: {},
+			fetch() { return this },
+			exports: {}
+		};
+
+		vm.runInNewContext(transformFileSync(filename).code, sandbox, filename);
+
+		expect(sandbox.exports.default()).to.equal(sandbox.window);
 	});
 
 	describe('fetch()', () => {
