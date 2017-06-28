@@ -17,14 +17,13 @@ describe('unfetch', () => {
 	it('should bind the native fetch on window', () => {
 		const filename = require.resolve('../src');
 		const sandbox = {
-			window: {},
 			fetch() { return this },
 			exports: {}
 		};
 
 		vm.runInNewContext(transformFileSync(filename).code, sandbox, filename);
 
-		expect(sandbox.exports.default()).to.equal(sandbox.window);
+		expect(sandbox.exports.default()).to.equal(undefined);
 	});
 
 	describe('fetch()', () => {
