@@ -6,6 +6,8 @@
 
 # unfetch
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/developit/unfetch.svg)](https://greenkeeper.io/)
+
 > Tiny 500b fetch "barely-polyfill"
 
 -   **Tiny:** under **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
