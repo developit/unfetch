@@ -29,7 +29,6 @@ describe('unfetch', () => {
 				.then( r => {
 					expect(r).to.have.property('text').that.is.a('function');
 					expect(r).to.have.property('json').that.is.a('function');
-					expect(r).to.have.property('xml').that.is.a('function');
 					expect(r).to.have.property('blob').that.is.a('function');
 					expect(r).to.have.property('clone').that.is.a('function');
 					expect(r).to.have.property('headers');

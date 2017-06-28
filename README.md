@@ -9,7 +9,7 @@
 > Tiny 500b fetch "barely-polyfill"
 
 -   **Tiny:** under **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
--   **Minimal:** just `fetch()` with headers and text/json/xml responses
+-   **Minimal:** just `fetch()` with headers and text/json responses
 -   **Familiar:** a subset of the full API
 -   **Supported:** supports IE8+ _(assuming `Promise` is polyfilled of course!)_
 -   **Standalone:** one function, no dependencies
@@ -145,8 +145,8 @@ A message related to the `status` attribute, e.g. `OK` for a status `200`.
 #### `response.clone()`
 Will return another `Object` with the same shape and content as `response`.
 
-#### `response.text()`, `response.json()`, `response.xml()`, `response.blob()`
-Will return the response content as plain text, JSON, XML and `Blob`, respectively.
+#### `response.text()`, `response.json()`, `response.blob()`
+Will return the response content as plain text, JSON and `Blob`, respectively.
 
 #### `response.headers`
 Again, Unfetch doesn't implement a full spec-compliant [`Headers Class`](https://fetch.spec.whatwg.org/#headers), emulating some of the Map-like functionality through its own functions:
