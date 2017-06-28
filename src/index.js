@@ -40,7 +40,6 @@ export default typeof fetch == 'function' && typeof window != 'undefined' ? fetc
 				clone: response,
 				text: () => Promise.resolve(request.responseText),
 				json: () => Promise.resolve(request.responseText).then(JSON.parse),
-				xml: () => Promise.resolve(request.responseXML),
 				blob: () => Promise.resolve(new Blob([request.response])),
 				headers: {
 					keys: () => keys,
