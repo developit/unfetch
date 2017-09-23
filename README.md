@@ -115,7 +115,7 @@ fetch('/bear', {
 ```
 
 ## API
-While one of Unfetch's goals is to provide a familiar interface, it's API may differ from other `fetch` polyfills/ponyfills. 
+While one of Unfetch's goals is to provide a familiar interface, its API may differ from other `fetch` polyfills/ponyfills. 
 One of the key differences is that Unfetch focuses on implementing the [`fetch()` API](https://fetch.spec.whatwg.org/#fetch-api), while offering minimal (yet functional) support to the other sections of the [Fetch spec](https://fetch.spec.whatwg.org/), like the [Headers class](https://fetch.spec.whatwg.org/#headers-class) or the [Response class](https://fetch.spec.whatwg.org/#response-class).
 Unfetch's API is organized as follows:
 
