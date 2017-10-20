@@ -33,7 +33,7 @@ export default typeof fetch=='function' ? fetch.bind() : function(url, options) 
 			});
 
 			return {
-				ok: (request.status/200|0) == 1,		// 200-299
+				ok: (request.status/100|0) == 2,		// 200-299
 				status: request.status,
 				statusText: request.statusText,
 				url: request.responseURL,
