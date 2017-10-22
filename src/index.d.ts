@@ -1,5 +1,5 @@
 declare const unfetch: typeof fetch;
 
-declare module "isomorphic-unfetch" {
+declare module "unfetch" {
   export = unfetch;
 }
