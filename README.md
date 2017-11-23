@@ -22,6 +22,10 @@
 
 * * *
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/WbARjbDRQz5y3N6VBEMPU4LW/developit/unfetch'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/WbARjbDRQz5y3N6VBEMPU4LW/developit/unfetch.svg' />
+</a>
+
 ## Table of Contents
 
 -   [Install](#install)
