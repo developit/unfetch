@@ -19,7 +19,7 @@
 >
 > -   Uses simple Arrays instead of Iterables, since Arrays _are_ iterables
 > -   No streaming, just Promisifies existing XMLHttpRequest response bodies
-> -   No server-side usage, see [isomorphic-unfetch](https://github.com/developit/unfetch/tree/master/packages/isomorphic-unfetch) if you need to support Node.js
+> -   Use in Node.JS is handled by [isomorphic-unfetch](https://github.com/developit/unfetch/tree/master/packages/isomorphic-unfetch)
 
 * * *
 
