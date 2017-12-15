@@ -8,7 +8,7 @@
   "umd:main": "dist/unfetch.umd.js",
   "scripts": {
     "test": "eslint src test && mocha --compilers js:babel-register test/**/*.js",
-    "build": "npm-run-all --silent clean -p rollup:* -p minify:* -s size -p copy-typescript-definition",
+    "build": "npm-run-all --silent clean -p rollup:* -p minify:* -s size",
     "clean": "rimraf dist && mkdirp dist",
     "rollup:cjs": "cross-env FORMAT=cjs rollup -c rollup.config.js -f cjs -n $npm_package_name -o $npm_package_main",
     "rollup:umd": "cross-env FORMAT=umd rollup -c rollup.config.js -f umd -n $npm_package_name -o $npm_package_umd_main",
@@ -16,7 +16,6 @@
     "minify:cjs": "uglifyjs $npm_package_main -cm toplevel -o $npm_package_main -p relative --in-source-map ${npm_package_main}.map --source-map ${npm_package_main}.map",
     "minify:umd": "uglifyjs $npm_package_umd_main -cm -o $npm_package_umd_main -p relative --in-source-map ${npm_package_umd_main}.map --source-map ${npm_package_umd_main}.map",
     "size": "echo \"Gzipped Size: $(strip-json-comments --no-whitespace $npm_package_main | gzip-size)\"",
-    "copy-typescript-definition": "copyfiles -f src/index.d.ts dist",
     "prepublish": "npm run -s build",
     "release": "npm run build -s && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
   },
@@ -58,7 +57,6 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
-    "copyfiles": "^1.2.0",
     "cross-env": "^3.1.4",
     "eslint": "^3.13.1",
     "gzip-size-cli": "^1.0.0",
