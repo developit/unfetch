@@ -32,7 +32,7 @@
     "Jason Miller <jason@developit.ca>"
   ],
   "license": "MIT",
-  "typings": "src/index.d.ts",
+  "types": "src/index.d.ts",
   "files": [
     "src",
     "dist",
