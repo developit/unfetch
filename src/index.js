@@ -25,7 +25,7 @@ export default typeof fetch=='function' ? fetch.bind() : function(url, options) 
 				headers = {},
 				header;
 
-			request.getAllResponseHeaders().replace(/^(.*?):\s*([\s\S]*?)$/gm, (m, key, value) => {
+			request.getAllResponseHeaders().replace(/^(.*?):\s*?([\s\S]*?)$/gm, (m, key, value) => {
 				keys.push(key = key.toLowerCase());
 				all.push([key, value]);
 				header = headers[key];
