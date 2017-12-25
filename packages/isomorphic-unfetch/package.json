@@ -4,6 +4,7 @@
   "description": "Switches between unfetch & node-fetch for client & server.",
   "browser": "browser.js",
   "main": "index.js",
+  "types": "index.d.ts",
   "dependencies": {
     "node-fetch": "^1.7.1",
     "unfetch": "^3.0.0"
