@@ -30,7 +30,7 @@ describe('unfetch', () => {
 		it('sanity test', () => {
 			let xhr = {
 				setRequestHeader: spy(),
-				getAllResponseHeaders: stub().returns('X-Foo: bar\nX-Foo:baz'),
+				getAllResponseHeaders: stub().returns('X-Foo:bar\nX-Foo:baz'),
 				open: spy(),
 				send: spy(),
 				status: 200,
