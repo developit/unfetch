@@ -2,6 +2,7 @@
   "name": "unfetch",
   "version": "3.0.0",
   "description": "Bare minimum fetch polyfill in 500 bytes",
+  "browser": "dist/unfetch.umd.js",
   "main": "dist/unfetch.js",
   "module": "dist/unfetch.es.js",
   "jsnext:main": "dist/unfetch.es.js",
