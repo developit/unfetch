@@ -103,11 +103,12 @@ fetch('/foo')
 
 
 // complex POST request with JSON, headers:
+const myHeaders = new Headers();
+myHeaders.append('Content-Type', 'application/json');
+
 fetch('/bear', {
   method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
+  headers: myHeaders,
   body: JSON.stringify({ hungry: true })
 }).then( r => {
   open(r.headers.get('location'));
