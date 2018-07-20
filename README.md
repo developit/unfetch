@@ -9,7 +9,7 @@
 > Tiny 500b fetch "barely-polyfill"
 
 -   **Tiny:** under **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
--   **Minimal:** just `fetch()` with headers and text/json/xml responses
+-   **Minimal:** just `fetch()` with headers and text/json responses
 -   **Familiar:** a subset of the full API
 -   **Supported:** supports IE8+ _(assuming `Promise` is polyfilled of course!)_
 -   **Standalone:** one function, no dependencies
@@ -19,6 +19,7 @@
 >
 > -   Uses simple Arrays instead of Iterables, since Arrays _are_ iterables
 > -   No streaming, just Promisifies existing XMLHttpRequest response bodies
+> -   Use in Node.JS is handled by [isomorphic-unfetch](https://github.com/developit/unfetch/tree/master/packages/isomorphic-unfetch)
 
 * * *
 
@@ -28,6 +29,7 @@
 -   [Usage](#usage)
 -   [Examples & Demos](#examples--demos)
 -   [API](#api)
+-   [Caveats](#caveats)
 -   [Contribute](#contribute)
 -   [License](#license)
 
@@ -112,6 +114,47 @@ fetch('/bear', {
   return r.json();
 })
 ```
+
+## API
+While one of Unfetch's goals is to provide a familiar interface, its API may differ from other `fetch` polyfills/ponyfills. 
+One of the key differences is that Unfetch focuses on implementing the [`fetch()` API](https://fetch.spec.whatwg.org/#fetch-api), while offering minimal (yet functional) support to the other sections of the [Fetch spec](https://fetch.spec.whatwg.org/), like the [Headers class](https://fetch.spec.whatwg.org/#headers-class) or the [Response class](https://fetch.spec.whatwg.org/#response-class).
+Unfetch's API is organized as follows:
+
+### `fetch(url: string, options: Object)`
+This function is the heart of Unfetch. It will fetch resources from `url` according to the given `options`, returning a Promise that will eventually resolve to the response.
+
+Unfetch will account for the following properties in `options`:
+  
+  * `method`: Indicates the request method to be performed on the
+   target resource (The most common ones being `GET`, `POST`, `PUT`, `PATCH`, `HEAD`, `OPTIONS` or `DELETE`).
+  * `headers`: An `Object` containing additional information to be sent with the request, e.g. `{ 'Content-Type': 'application/json' }` to indicate a JSON-typed request body.
+  * `credentials`: ⚠ Accepts a `"include"` string, which will allow both CORS and same origin requests to work with cookies. As pointed in the ['Caveats' section](#caveats), Unfetch won't send or receive cookies otherwise. The `"same-origin"` value is not supported. ⚠
+  * `body`: The content to be transmited in request's body. Common content types include `FormData`, `JSON`, `Blob`, `ArrayBuffer` or plain text.
+
+### `response` Methods and Attributes
+These methods are used to handle the response accordingly in your Promise chain. Instead of implementing full spec-compliant [Response Class](https://fetch.spec.whatwg.org/#response-class) functionality, Unfetch provides the following methods and attributes:
+
+#### `response.ok`
+Returns `true` if the request received a status in the `OK` range (200-299).
+
+#### `response.status`
+Contains the status code of the response, e.g. `404` for a not found resource, `200` for a success.
+
+#### `response.statusText`
+A message related to the `status` attribute, e.g. `OK` for a status `200`.
+
+#### `response.clone()`
+Will return another `Object` with the same shape and content as `response`.
+
+#### `response.text()`, `response.json()`, `response.blob()`
+Will return the response content as plain text, JSON and `Blob`, respectively.
+
+#### `response.headers`
+Again, Unfetch doesn't implement a full spec-compliant [`Headers Class`](https://fetch.spec.whatwg.org/#headers), emulating some of the Map-like functionality through its own functions:
+  * `headers.keys`: Returns an `Array` containing the `key` for every header in the response.
+  * `headers.entries`: Returns an `Array` containing the `[key, value]` pairs for every `Header` in the response.
+  * `headers.get(key)`: Returns the `value` associated with the given `key`.
+  * `headers.has(key)`: Returns a `boolean` asserting the existence of a `value` for the given `key` among the response headers.
 
 ## Caveats
 
