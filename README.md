@@ -12,7 +12,7 @@
 
 > Tiny 500b fetch "barely-polyfill"
 
--   **Tiny:** under **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
+-   **Tiny:** about **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
 -   **Minimal:** just `fetch()` with headers and text/json responses
 -   **Familiar:** a subset of the full API
 -   **Supported:** supports IE8+ _(assuming `Promise` is polyfilled of course!)_
