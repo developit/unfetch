@@ -9,7 +9,7 @@ export default typeof fetch=='function' ? fetch.bind() : function(url, options) 
 			request.setRequestHeader(i, options.headers[i]);
 		}
 
-		request.withCredentials = options.credentials=='include';
+		request.withCredentials = options.credentials !== 'omit';
 
 		request.onload = () => {
 			resolve(response());
