@@ -15,6 +15,10 @@ export default typeof fetch=='function' ? fetch.bind() : function(url, options) 
 			resolve(response());
 		};
 
+		if (options.signal) options.signal.onabort = () => request.abort();
+
+		request.onabort = reject;
+
 		request.onerror = reject;
 
 		request.send(options.body || null);
