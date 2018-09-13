@@ -17,8 +17,7 @@ export default typeof fetch=='function' ? fetch.bind() : function(url, options) 
 
 		request.onerror = reject;
 
-		let requestBody = typeof options.body !== 'undefined' ? options.body : null;
-		request.send(requestBody);
+		request.send(options.body || null);
 
 		function response() {
 			let keys = [],
