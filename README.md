@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.imgur.com/JaXEFNp.png" width="300" height="300" alt="unfetch">
+  <img src="https://i.imgur.com/0cSIPzP.png" width="300" height="300" alt="unfetch">
   <br>
   <a href="https://www.npmjs.org/package/unfetch"><img src="https://img.shields.io/npm/v/unfetch.svg?style=flat" alt="npm"></a>
   <a href="https://unpkg.com/unfetch/polyfill"><img src="https://img.badgesize.io/https://unpkg.com/unfetch/polyfill/index.js?compression=gzip" alt="gzip size"></a>
