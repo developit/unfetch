@@ -1,12 +1,18 @@
 {
   "name": "isomorphic-unfetch",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "Switches between unfetch & node-fetch for client & server.",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "browser.js"
+  ],
+  "repository": "developit/unfetch",
   "browser": "browser.js",
   "main": "index.js",
   "types": "index.d.ts",
   "dependencies": {
-    "node-fetch": "^1.7.1",
-    "unfetch": "^3.0.0"
+    "node-fetch": "^2.1.2",
+    "unfetch": "^3.1.0"
   }
 }

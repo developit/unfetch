@@ -27,8 +27,10 @@ describe('unfetch', () => {
 	});
 
 	describe('fetch()', () => {
-		it('sanity test', () => {
-			let xhr = {
+		let xhr;
+
+		beforeEach(() => {
+			xhr = {
 				setRequestHeader: spy(),
 				getAllResponseHeaders: stub().returns('X-Foo: bar\nX-Foo:baz'),
 				open: spy(),
@@ -40,7 +42,13 @@ describe('unfetch', () => {
 			};
 
 			global.XMLHttpRequest = stub().returns(xhr);
+		});
 
+		afterEach(() => {
+			delete global.XMLHttpRequest;
+		});
+
+		it('sanity test', () => {
 			let p = fetch('/foo', { headers: { a: 'b' } })
 				.then( r => {
 					expect(r).to.have.property('text').that.is.a('function');
@@ -60,12 +68,23 @@ describe('unfetch', () => {
 					expect(xhr.setRequestHeader).to.have.been.calledOnce.and.calledWith('a', 'b');
 					expect(xhr.open).to.have.been.calledOnce.and.calledWith('get', '/foo');
 					expect(xhr.send).to.have.been.calledOnce.and.calledWith();
-
-					delete global.XMLHttpRequest;
 				});
 
 			expect(xhr.onload).to.be.a('function');
 			expect(xhr.onerror).to.be.a('function');
+
+			xhr.onload();
+
+			return p;
+		});
+
+		it('handles empty header values', () => {
+			xhr.getAllResponseHeaders = stub().returns('Server: \nX-Foo:baz');
+			let p = fetch('/foo')
+				.then(r => {
+					expect(r.headers.get('server')).to.equal('');
+					expect(r.headers.get('X-foo')).to.equal('baz');
+				});
 
 			xhr.onload();
 
