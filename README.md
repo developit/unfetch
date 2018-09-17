@@ -26,73 +26,78 @@
 
 * * *
 
-## Table of Contents
-
--   [Install](#install)
--   [Usage](#usage)
--   [Examples & Demos](#examples--demos)
--   [API](#api)
--   [Caveats](#caveats)
--   [Contribute](#contribute)
--   [License](#license)
+- [Unfetch](#unfetch)
+- [Installation](#installation)
+- [Usage: As a Polyfill](#usage-as-a-polyfill)
+- [Usage: As a Ponyfill](#usage-as-a-ponyfill)
+- [Examples & Demos](#examples--demos)
+- [API](#api)
+- [Caveats](#caveats)
+- [Contribute](#contribute)
+- [License](#license)
 
 * * *
 
-## Install
+## Installation
 
-This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
+For use with [node](http://nodejs.org) and [npm](https://npmjs.com):
 
 ```sh
-$ npm install --save unfetch
+npm install --save unfetch
 ```
 
-Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](https://webpack.js.org/), use as you would anything else:
-
-```javascript
-// using ES6 modules
-import fetch from 'unfetch'
-
-// using CommonJS modules
-var fetch = require('unfetch')
-```
-
-The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
-
-```html
-<script src="//unpkg.com/unfetch/dist/unfetch.umd.js"></script>
-```
-
-This exposes the `unfetch()` function as a global.
+Otherwise, grab it from [unpkg.com/unfetch](https://unpkg.com/unfetch/).
 
 * * *
 
-## Usage
+## Usage: As a [Polyfill](https://ponyfill.com/#polyfill)
 
-As a [**ponyfill**](https://ponyfill.com):
-
-```js
-import fetch from 'unfetch';
-
-fetch('/foo.json')
-  .then( r => r.json() )
-  .then( data => {
-    console.log(data);
-  });
-```
-
-Globally, as a [**polyfill**](https://ponyfill.com/#polyfill):
+This automatically "installs" unfetch as `window.fetch()` if it detects Fetch isn't supported:
 
 ```js
-import 'unfetch/polyfill';
+import 'unfetch/polyfill'
 
-// "fetch" is now installed globally if it wasn't already available
-
+// fetch is now available globally!
 fetch('/foo.json')
   .then( r => r.json() )
-  .then( data => {
-    console.log(data);
-  });
+  .then( data => console.log(data) )
 ```
+
+This polyfill version is particularly useful for hotlinking from [unpkg](https://unpkg.com):
+
+```html
+<script src="https://unpkg.com/unfetch/polyfill"></script>
+<script>
+  // now our page can use fetch!
+  fetch('/foo')
+</script>
+```
+
+* * *
+
+## Usage: As a [Ponyfill](https://github.com/sindresorhus/ponyfill)
+
+With a module bundler like [rollup](http://rollupjs.org) or [webpack](https://webpack.js.org),
+you can import unfetch to use in your code without modifying any globals:
+
+```js
+// using JS Modules:
+import fetch from 'unfetch'
+
+// or using CommonJS:
+var fetch = require('unfetch')
+
+// usage:
+fetch('/foo.json')
+  .then( r => r.json() )
+  .then( data => console.log(data) )
+```
+
+The above will always return `unfetch()`. _(even if `window.fetch` exists!)_
+
+There's also a UMD bundle available as [unfetch/dist/unfetch.umd.js](https://unpkg.com/unfetch/dist/unfetch.umd.js), which doesn't automatically install itself as `window.fetch`.
+
+* * *
 
 ## Examples & Demos
 
@@ -117,6 +122,8 @@ fetch('/bear', {
   return r.json();
 })
 ```
+
+* * *
 
 ## API
 While one of Unfetch's goals is to provide a familiar interface, its API may differ from other `fetch` polyfills/ponyfills. 
