@@ -3,3 +3,7 @@ node_js:
   - 10
   - 8
   - 6
+before_install:
+  - npm i -g npm@latest
+install:
+  - npm ci
