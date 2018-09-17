@@ -3,4 +3,6 @@ node_js:
   - node
 install:
   - npm ci
-
+cache:
+  directories:
+    - "node_modules"
