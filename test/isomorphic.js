@@ -1,11 +1,10 @@
-import { expect } from 'chai';
 import fs from 'fs';
 import vm from 'vm';
 
 describe('isomorphic-unfetch', () => {
 	describe('"browser" entry', () => {
 		it('should resolve to fetch when window.fetch exists', () => {
-			function fetch() { return this }
+			function fetch() { return this; }
 			function unfetch() {}
 
 			let sandbox = {
@@ -20,7 +19,7 @@ describe('isomorphic-unfetch', () => {
 			let filename = require.resolve('../packages/isomorphic-unfetch/browser');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
 
-			expect(sandbox.module.exports).to.equal(fetch);
+			expect(sandbox.module.exports).toBe(fetch);
 		});
 
 		it('should resolve to unfetch when window.fetch does not exist', () => {
@@ -37,13 +36,13 @@ describe('isomorphic-unfetch', () => {
 			let filename = require.resolve('../packages/isomorphic-unfetch/browser');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
 
-			expect(sandbox.module.exports).to.equal(unfetch);
+			expect(sandbox.module.exports).toBe(unfetch);
 		});
 	});
 
 	describe('"main" entry', () => {
 		it('should resolve to fetch when window.fetch exists', () => {
-			function fetch() { return this }
+			function fetch() { return this; }
 			function unfetch() {}
 
 			let sandbox = {
@@ -58,7 +57,7 @@ describe('isomorphic-unfetch', () => {
 			let filename = require.resolve('../packages/isomorphic-unfetch');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
 
-			expect(sandbox.module.exports).to.equal(fetch);
+			expect(sandbox.module.exports).toBe(fetch);
 		});
 
 		it('should resolve to unfetch when window.fetch does not exist', () => {
@@ -75,14 +74,14 @@ describe('isomorphic-unfetch', () => {
 			let filename = require.resolve('../packages/isomorphic-unfetch');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
 
-			expect(sandbox.module.exports).to.equal(unfetch);
+			expect(sandbox.module.exports).toBe(unfetch);
 		});
 	});
 
 
 	describe('"main" entry in NodeJS', () => {
 		it('should resolve to fetch when window.fetch exists', () => {
-			function fetch() { return this }
+			function fetch() { return this; }
 			function unfetch() {}
 
 			let sandbox = {
@@ -95,7 +94,7 @@ describe('isomorphic-unfetch', () => {
 			let filename = require.resolve('../packages/isomorphic-unfetch');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
 
-			expect(sandbox.module.exports).to.equal(fetch);
+			expect(sandbox.module.exports).toBe(fetch);
 		});
 
 		it('should resolve to unfetch when window.fetch does not exist', () => {
@@ -115,7 +114,7 @@ describe('isomorphic-unfetch', () => {
 			let filename = require.resolve('../packages/isomorphic-unfetch');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
 
-			expect(sandbox.module.exports('/')).to.equal(modules['node-fetch']('/'));
+			expect(sandbox.module.exports('/')).toBe(modules['node-fetch']('/'));
 		});
 	});
 });
