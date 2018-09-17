@@ -1,14 +1,18 @@
 <p align="center">
   <img src="https://i.imgur.com/JaXEFNp.png" width="300" height="300" alt="unfetch">
   <br>
-  <a href="https://www.npmjs.org/package/unfetch"><img src="https://img.shields.io/npm/v/unfetch.svg?style=flat" alt="npm"></a> <a href="https://travis-ci.org/developit/unfetch"><img src="https://travis-ci.org/developit/unfetch.svg?branch=master" alt="travis"></a>
+  <a href="https://www.npmjs.org/package/unfetch"><img src="https://img.shields.io/npm/v/unfetch.svg?style=flat" alt="npm"></a>
+  <a href="https://cdn.jsdelivr.net/npm/unfetch/dist/unfetch.umd.js"><img src="http://img.badgesize.io/https://unpkg.com/unfetch/dist/unfetch.js?compression=gzip" alt="gzip size"></a>
+  <a href="https://packagephobia.now.sh/result?p=unfetch"><img src="https://packagephobia.now.sh/badge?p=unfetch" alt="install size"></a>
+  <a href="https://www.npmjs.com/package/unfetch"><img src="https://img.shields.io/npm/dt/unfetch.svg" alt="downloads" ></a>
+  <a href="https://travis-ci.org/developit/unfetch"><img src="https://travis-ci.org/developit/unfetch.svg?branch=master" alt="travis"></a>
 </p>
 
 # unfetch
 
 > Tiny 500b fetch "barely-polyfill"
 
--   **Tiny:** under **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
+-   **Tiny:** about **500 bytes** of [ES3](https://unpkg.com/unfetch) gzipped
 -   **Minimal:** just `fetch()` with headers and text/json responses
 -   **Familiar:** a subset of the full API
 -   **Supported:** supports IE8+ _(assuming `Promise` is polyfilled of course!)_

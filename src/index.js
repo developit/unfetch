@@ -17,7 +17,7 @@ export default typeof fetch=='function' ? fetch.bind() : function(url, options) 
 
 		request.onerror = reject;
 
-		request.send(options.body);
+		request.send(options.body || null);
 
 		function response() {
 			let keys = [],
@@ -25,7 +25,7 @@ export default typeof fetch=='function' ? fetch.bind() : function(url, options) 
 				headers = {},
 				header;
 
-			request.getAllResponseHeaders().replace(/^(.*?):\s*?([\s\S]*?)$/gm, (m, key, value) => {
+			request.getAllResponseHeaders().replace(/^(.*?):[^\S\n]*([\s\S]*?)$/gm, (m, key, value) => {
 				keys.push(key = key.toLowerCase());
 				all.push([key, value]);
 				header = headers[key];
