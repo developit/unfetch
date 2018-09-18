@@ -5,8 +5,9 @@ export default function(url, options) {
 
 		request.open(options.method || 'get', url, true);
 
-		for (let i in options.headers) {
-			request.setRequestHeader(i, options.headers[i]);
+		let header;
+		for (header in options.headers) {
+			request.setRequestHeader(header, options.headers[header]);
 		}
 
 		request.withCredentials = options.credentials=='include';
@@ -22,8 +23,7 @@ export default function(url, options) {
 		function response() {
 			let keys = [],
 				all = [],
-				headers = {},
-				header;
+				headers = {};
 
 			request.getAllResponseHeaders().replace(/^(.*?):[^\S\n]*([\s\S]*?)$/gm, (m, key, value) => {
 				keys.push(key = key.toLowerCase());
