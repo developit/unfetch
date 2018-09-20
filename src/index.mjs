@@ -20,20 +20,13 @@ export default function(url, options) {
 		request.send(options.body || null);
 
 		function response() {
-			let keys = [],
-				all = [],
-				headers = {},
-				header;
-
-			request.getAllResponseHeaders().replace(/^(.*?):[^\S\n]*([\s\S]*?)$/gm, (m, key, value) => {
-				keys.push(key = key.toLowerCase());
-				all.push([key, value]);
-				header = headers[key];
-				headers[key] = header ? `${header},${value}` : value;
+			let temp = {}, keys = [];
+			request.getAllResponseHeaders().toLowerCase().replace(/^(.+?):/gm, (m, key) => {
+				!temp[key] && keys.push(temp[key] = key);
 			});
 
 			return {
-				ok: (request.status/100|0) == 2,		// 200-299
+				ok: request.status/100|0 == 2,		// 200-299
 				status: request.status,
 				statusText: request.statusText,
 				url: request.responseURL,
@@ -43,9 +36,9 @@ export default function(url, options) {
 				blob: () => Promise.resolve(new Blob([request.response])),
 				headers: {
 					keys: () => keys,
-					entries: () => all,
-					get: n => headers[n.toLowerCase()],
-					has: n => n.toLowerCase() in headers
+					entries: () => keys.map(n => [n, request.getResponseHeader(n)]),
+					get: n => request.getResponseHeader(n),
+					has: n => request.getResponseHeader(n) != null
 				}
 			};
 		}
