@@ -1,13 +1,12 @@
-export default function(url, options) {
+export default function (url, options) {
 	options = options || {};
-	return new Promise( (resolve, reject) => {
+	return new Promise((resolve, reject) => {
 		const request = new XMLHttpRequest();
 		const keys = [];
-		const all = [];
 		const headers = {};
 
 		const response = () => ({
-			ok: (request.status/100|0) == 2,		// 200-299
+			ok: ((request.status / 100) | 0) == 2, // 200-299
 			statusText: request.statusText,
 			status: request.status,
 			url: request.responseURL,
@@ -17,26 +16,27 @@ export default function(url, options) {
 			clone: response,
 			headers: {
 				keys: () => keys,
-				entries: () => all,
-				get: n => headers[n.toLowerCase()],
-				has: n => n.toLowerCase() in headers
-			}
+				entries: () => keys.map((n) => [n, request.getResponseHeader(n)]),
+				get: (n) => request.getResponseHeader(n),
+				has: (n) => request.getResponseHeader(n) != null,
+			},
 		});
 
-		request.open(options.method || 'get', url, true);
+		request.open(options.method || "get", url, true);
 
 		request.onload = () => {
-			request.getAllResponseHeaders().replace(/^(.*?):[^\S\n]*([\s\S]*?)$/gm, (m, key, value) => {
-				keys.push(key = key.toLowerCase());
-				all.push([key, value]);
-				headers[key] = headers[key] ? `${headers[key]},${value}` : value;
-			});
+			request
+				.getAllResponseHeaders()
+				.toLowerCase()
+				.replace(/^(.+?):/gm, (m, key) => {
+					headers[key] || keys.push((headers[key] = key));
+				});
 			resolve(response());
 		};
 
 		request.onerror = reject;
 
-		request.withCredentials = options.credentials=='include';
+		request.withCredentials = options.credentials == "include";
 
 		for (const i in options.headers) {
 			request.setRequestHeader(i, options.headers[i]);

@@ -1,29 +1,34 @@
-import fetch from '../src/index.mjs';
-import fetchDist from '..';
+import fetch from "../src/index.mjs";
+import fetchDist from "..";
 
-describe('unfetch', () => {
-	it('should be a function', () => {
+describe("unfetch", () => {
+	it("should be a function", () => {
 		expect(fetch).toEqual(expect.any(Function));
 	});
 
-	it('should be compiled correctly', () => {
+	it("should be compiled correctly", () => {
 		expect(fetchDist).toEqual(expect.any(Function));
 		expect(fetchDist).toHaveLength(2);
 	});
 
-	describe('fetch()', () => {
+	describe("fetch()", () => {
 		let xhr;
 
 		beforeEach(() => {
 			xhr = {
 				setRequestHeader: jest.fn(),
-				getAllResponseHeaders: jest.fn().mockReturnValue('X-Foo: bar\nX-Foo:baz'),
+				getAllResponseHeaders: jest
+					.fn()
+					.mockReturnValue(
+						"X-Foo: bar\r\nX-Foo: baz\r\nX-Bar: bar, baz\r\nx-test: \r\nX-Baz: bar, baz\r\ndate: 18:23:22"
+					),
+				getResponseHeader: jest.fn().mockReturnValue("bar, baz"),
 				open: jest.fn(),
 				send: jest.fn(),
 				status: 200,
-				statusText: 'OK',
+				statusText: "OK",
 				responseText: '{"a":"b"}',
-				responseURL: '/foo?redirect'
+				responseURL: "/foo?redirect",
 			};
 
 			global.XMLHttpRequest = jest.fn(() => xhr);
@@ -33,29 +38,36 @@ describe('unfetch', () => {
 			delete global.XMLHttpRequest;
 		});
 
-		it('sanity test', () => {
-			let p = fetch('/foo', { headers: { a: 'b' } })
-				.then( r => {
+		it("sanity test", () => {
+			let p = fetch("/foo", { headers: { a: "b" } })
+				.then((r) => {
 					expect(r).toMatchObject({
 						text: expect.any(Function),
 						json: expect.any(Function),
 						blob: expect.any(Function),
 						clone: expect.any(Function),
-						headers: expect.any(Object)
+						headers: expect.any(Object),
 					});
 					expect(r.clone()).not.toBe(r);
-					expect(r.clone().url).toEqual('/foo?redirect');
+					expect(r.clone().url).toEqual("/foo?redirect");
 					expect(r.headers.get).toEqual(expect.any(Function));
-					expect(r.headers.get('x-foo')).toEqual('bar,baz');
+					expect(r.headers.get("x-foo")).toEqual("bar, baz");
+					expect(r.headers.keys()).toEqual([
+						"x-foo",
+						"x-bar",
+						"x-test",
+						"x-baz",
+						"date",
+					]);
 					return r.json();
 				})
-				.then( data => {
-					expect(data).toEqual({ a: 'b' });
+				.then((data) => {
+					expect(data).toEqual({ a: "b" });
 
 					expect(xhr.setRequestHeader).toHaveBeenCalledTimes(1);
-					expect(xhr.setRequestHeader).toHaveBeenCalledWith('a', 'b');
+					expect(xhr.setRequestHeader).toHaveBeenCalledWith("a", "b");
 					expect(xhr.open).toHaveBeenCalledTimes(1);
-					expect(xhr.open).toHaveBeenCalledWith('get', '/foo', true);
+					expect(xhr.open).toHaveBeenCalledWith("get", "/foo", true);
 					expect(xhr.send).toHaveBeenCalledTimes(1);
 					expect(xhr.send).toHaveBeenCalledWith(null);
 				});
@@ -68,13 +80,21 @@ describe('unfetch', () => {
 			return p;
 		});
 
-		it('handles empty header values', () => {
-			xhr.getAllResponseHeaders = jest.fn().mockReturnValue('Server: \nX-Foo:baz');
-			let p = fetch('/foo')
-				.then(r => {
-					expect(r.headers.get('server')).toEqual('');
-					expect(r.headers.get('X-foo')).toEqual('baz');
-				});
+		it("handles empty header values", () => {
+			xhr.getAllResponseHeaders = jest
+				.fn()
+				.mockReturnValue("Server: \nX-Foo:baz");
+			const headers = {
+				server: "",
+				"x-foo": "baz",
+			};
+			xhr.getResponseHeader = jest.fn(
+				(header) => headers[header.toLowerCase()] ?? null
+			);
+			let p = fetch("/foo").then((r) => {
+				expect(r.headers.get("server")).toEqual("");
+				expect(r.headers.get("X-foo")).toEqual("baz");
+			});
 
 			xhr.onload();
 
