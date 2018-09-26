@@ -22,7 +22,7 @@ export default function(url, options) {
 		function response() {
 			let temp = {}, keys = [];
 			request.getAllResponseHeaders().toLowerCase().replace(/^(.+?):/gm, (m, key) => {
-				!temp[key] && keys.push(temp[key] = key);
+				temp[key] || keys.push(temp[key] = key);
 			});
 
 			return {
