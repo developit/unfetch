@@ -11,7 +11,8 @@
     "test": "eslint src test && jest",
     "build": "microbundle src/index.mjs && microbundle -f cjs polyfill/polyfill.mjs -o polyfill/index.js --no-sourcemap && cp dist/unfetch.mjs dist/unfetch.es.js",
     "prepare": "npm run -s build",
-    "release": "cross-var npm run build -s && cross-var git commit -am $npm_package_version && cross-var git tag $npm_package_version && git push && git push --tags && npm publish"
+    "release": "cross-var npm run build -s && cross-var git commit -am $npm_package_version && cross-var git tag $npm_package_version && git push && git push --tags && npm publish",
+    "format": "eslint {src,test}  --fix"
   },
   "repository": "developit/unfetch",
   "keywords": [
