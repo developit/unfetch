@@ -12,7 +12,7 @@ export default function(url, options) {
 		request.withCredentials = options.credentials=='include';
 
 		request.onreadystatechange = function() {
-			if(this.readyState === 4 && this.status === 200) {
+			if(this.readyState === 4) {
 				resolve(response());
 			}
 		};
