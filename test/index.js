@@ -20,6 +20,7 @@ describe('unfetch', () => {
 				getAllResponseHeaders: jest.fn().mockReturnValue('X-Foo: bar\nX-Foo:baz'),
 				open: jest.fn(),
 				send: jest.fn(),
+				readyState: 4,
 				status: 200,
 				statusText: 'OK',
 				responseText: '{"a":"b"}',
@@ -60,10 +61,10 @@ describe('unfetch', () => {
 					expect(xhr.send).toHaveBeenCalledWith(null);
 				});
 
-			expect(xhr.onload).toEqual(expect.any(Function));
+			expect(xhr.onreadystatechange).toEqual(expect.any(Function));
 			expect(xhr.onerror).toEqual(expect.any(Function));
 
-			xhr.onload();
+			xhr.onreadystatechange();
 
 			return p;
 		});
@@ -76,7 +77,7 @@ describe('unfetch', () => {
 					expect(r.headers.get('X-foo')).toEqual('baz');
 				});
 
-			xhr.onload();
+			xhr.onreadystatechange();
 
 			return p;
 		});

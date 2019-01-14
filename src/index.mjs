@@ -11,8 +11,10 @@ export default function(url, options) {
 
 		request.withCredentials = options.credentials=='include';
 
-		request.onload = () => {
-			resolve(response());
+		request.onreadystatechange = function() {
+			if(this.readyState === 4 && this.status !== 0) {
+				resolve(response());
+			}
 		};
 
 		request.onerror = reject;
