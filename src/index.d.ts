@@ -14,4 +14,4 @@ declare namespace unfetch {
 
 declare const unfetch: typeof fetch;
 
-export = unfetch;
+export default unfetch;
