@@ -17,7 +17,8 @@ describe('unfetch', () => {
 		beforeEach(() => {
 			xhr = {
 				setRequestHeader: jest.fn(),
-				getAllResponseHeaders: jest.fn().mockReturnValue('X-Foo: bar\nX-Foo:baz'),
+				getAllResponseHeaders: jest.fn().mockReturnValue('X-Foo: bar\r\nX-Foo: baz\r\nX-Bar: bar, baz\r\nx-test: \r\nX-Baz: bar, baz\r\ndate: 18:23:22'),
+				getResponseHeader: jest.fn().mockReturnValue('bar, baz'),
 				open: jest.fn(),
 				send: jest.fn(),
 				status: 200,
@@ -46,7 +47,8 @@ describe('unfetch', () => {
 					expect(r.clone()).not.toBe(r);
 					expect(r.clone().url).toEqual('/foo?redirect');
 					expect(r.headers.get).toEqual(expect.any(Function));
-					expect(r.headers.get('x-foo')).toEqual('bar,baz');
+					expect(r.headers.get('x-foo')).toEqual('bar, baz');
+					expect(r.headers.keys()).toEqual(['x-foo', 'x-bar', 'x-test', 'x-baz', 'date']);
 					return r.json();
 				})
 				.then( data => {
@@ -69,11 +71,11 @@ describe('unfetch', () => {
 		});
 
 		it('handles empty header values', () => {
-			xhr.getAllResponseHeaders = jest.fn().mockReturnValue('Server: \nX-Foo:baz');
+			// If we're using getResponseHeader directly this test might be pointless
+			xhr.getResponseHeader = jest.fn().mockReturnValue('');
 			let p = fetch('/foo')
 				.then(r => {
 					expect(r.headers.get('server')).toEqual('');
-					expect(r.headers.get('X-foo')).toEqual('baz');
 				});
 
 			xhr.onload();
