@@ -7,9 +7,18 @@
   "module": "dist/unfetch.mjs",
   "jsnext:main": "dist/unfetch.mjs",
   "umd:main": "dist/unfetch.umd.js",
+  "size-limit": [
+    {
+      "path": "polyfill/index.js",
+      "limit": "500 B",
+      "webpack": false,
+      "running": false
+    }
+  ],
   "scripts": {
     "test": "eslint src test && jest",
     "build": "microbundle src/index.mjs && microbundle -f cjs polyfill/polyfill.mjs -o polyfill/index.js --no-sourcemap && cpy --rename=unfetch.es.js dist/unfetch.mjs dist",
+    "postbuild": "size-limit",
     "prepare": "npm run -s build",
     "release": "cross-var npm run build -s && cross-var git commit -am $npm_package_version && cross-var git tag $npm_package_version && git push && git push --tags && npm publish"
   },
@@ -54,6 +63,7 @@
     "eslint": "^3.13.1",
     "eslint-config-developit": "^1.1.1",
     "jest": "^23.6.0",
-    "microbundle": "^0.10.1"
+    "microbundle": "^0.10.1",
+    "size-limit": "^1.3.7"
   }
 }
