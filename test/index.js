@@ -80,5 +80,28 @@ describe('unfetch', () => {
 
 			return p;
 		});
+
+		it('supports options.headers as a Headers instance', () => {
+			let requestHeaders = {
+				pairs: [
+					['a', 'b'],
+					['content-type', 'application/json']
+				],
+				entries() {
+					return this.pairs;
+				}
+			};
+			let p = fetch('/foo', { headers: requestHeaders })
+				.then(r => r.json())
+				.then(data => {
+					expect(xhr.setRequestHeader).toHaveBeenCalledTimes(2);
+					expect(xhr.setRequestHeader).toHaveBeenNthCalledWith(1, 'a', 'b');
+					expect(xhr.setRequestHeader).toHaveBeenNthCalledWith(2, 'content-type', 'application/json');
+				});
+
+			xhr.onload();
+
+			return p;
+		});
 	});
 });
