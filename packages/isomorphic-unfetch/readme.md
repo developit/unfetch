@@ -7,7 +7,7 @@ Switches between [unfetch](https://github.com/developit/unfetch) & [node-fetch](
 This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
 
 ```sh
-$ npm install --save isomorphic-unfetch
+$ npm i isomorphic-unfetch
 ```
 
 Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](https://webpack.js.org/), use as you would anything else:
@@ -17,7 +17,7 @@ Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](http
 import fetch from 'isomorphic-unfetch'
 
 // using CommonJS modules
-var fetch = require('isomorphic-unfetch')
+const fetch = require('isomorphic-unfetch')
 ```
 
 ## Usage

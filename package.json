@@ -1,6 +1,6 @@
 {
   "name": "unfetch",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Bare minimum fetch polyfill in 500 bytes",
   "unpkg": "polyfill/index.js",
   "main": "dist/unfetch.js",
@@ -53,6 +53,6 @@
     "eslint": "^3.13.1",
     "eslint-config-developit": "^1.1.1",
     "jest": "^23.6.0",
-    "microbundle": "^0.6.0"
+    "microbundle": "^0.10.1"
   }
 }
