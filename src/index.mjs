@@ -1,37 +1,36 @@
+const regex = /^(.*?):[^\S\n]*([\s\S]*?)$/gm;
+const response = (request, headers) => ({
+	ok: (request.status/100|0) == 2,		// 200-299
+	statusText: request.statusText,
+	status: request.status,
+	url: request.responseURL,
+	text: () => Promise.resolve(request.responseText),
+	json: () => Promise.resolve(JSON.parse(request.responseText)),
+	blob: () => Promise.resolve(new Blob([request.response])),
+	clone: () => response(request, headers),
+	headers: {
+		keys: () => headers.keys,
+		entries: () => headers.all,
+		get: n => headers.raw[n.toLowerCase()],
+		has: n => n.toLowerCase() in headers.raw
+	}
+});
+
 export default function(url, options) {
 	options = options || {};
 	return new Promise( (resolve, reject) => {
 		const request = new XMLHttpRequest();
-		const keys = [];
-		const all = [];
-		const headers = {};
-
-		const response = () => ({
-			ok: (request.status/100|0) == 2,		// 200-299
-			statusText: request.statusText,
-			status: request.status,
-			url: request.responseURL,
-			text: () => Promise.resolve(request.responseText),
-			json: () => Promise.resolve(JSON.parse(request.responseText)),
-			blob: () => Promise.resolve(new Blob([request.response])),
-			clone: response,
-			headers: {
-				keys: () => keys,
-				entries: () => all,
-				get: n => headers[n.toLowerCase()],
-				has: n => n.toLowerCase() in headers
-			}
-		});
 
 		request.open(options.method || 'get', url, true);
 
 		request.onload = () => {
-			request.getAllResponseHeaders().replace(/^(.*?):[^\S\n]*([\s\S]*?)$/gm, (m, key, value) => {
-				keys.push(key = key.toLowerCase());
-				all.push([key, value]);
-				headers[key] = headers[key] ? `${headers[key]},${value}` : value;
+			const head = { all: [], keys: [], raw: {} };
+			request.getAllResponseHeaders().replace(regex, (m, key, value) => {
+				head.all.push([key, value]);
+				head.keys.push(key = key.toLowerCase());
+				head.raw[key] = head.raw[key] ? `${head.raw[key]},${value}` : value;
 			});
-			resolve(response());
+			resolve(response(request, head));
 		};
 
 		request.onerror = reject;
@@ -45,3 +44,5 @@ export default function(url, options) {
 		request.send(options.body || null);
 	});
 }
+
+export { response };
