@@ -139,7 +139,7 @@ Unfetch will account for the following properties in `options`:
    target resource (The most common ones being `GET`, `POST`, `PUT`, `PATCH`, `HEAD`, `OPTIONS` or `DELETE`).
   * `headers`: An `Object` containing additional information to be sent with the request, e.g. `{ 'Content-Type': 'application/json' }` to indicate a JSON-typed request body.
   * `credentials`: ⚠ Accepts a `"include"` string, which will allow both CORS and same origin requests to work with cookies. As pointed in the ['Caveats' section](#caveats), Unfetch won't send or receive cookies otherwise. The `"same-origin"` value is not supported. ⚠
-  * `body`: The content to be transmited in request's body. Common content types include `FormData`, `JSON`, `Blob`, `ArrayBuffer` or plain text.
+  * `body`: The content to be transmitted in request's body. Common content types include `FormData`, `JSON`, `Blob`, `ArrayBuffer` or plain text.
 
 ### `response` Methods and Attributes
 These methods are used to handle the response accordingly in your Promise chain. Instead of implementing full spec-compliant [Response Class](https://fetch.spec.whatwg.org/#response-class) functionality, Unfetch provides the following methods and attributes:
