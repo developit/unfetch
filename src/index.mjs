@@ -1,20 +1,6 @@
+import response from './lib/response';
+
 const regex = /^(.*?):[^\S\n]*([\s\S]*?)$/gm;
-const response = (request, headers) => ({
-	ok: (request.status/100|0) == 2,		// 200-299
-	statusText: request.statusText,
-	status: request.status,
-	url: request.responseURL,
-	text: () => Promise.resolve(request.responseText),
-	json: () => Promise.resolve(JSON.parse(request.responseText)),
-	blob: () => Promise.resolve(new Blob([request.response])),
-	clone: () => response(request, headers),
-	headers: {
-		keys: () => headers.keys,
-		entries: () => headers.all,
-		get: n => headers.raw[n.toLowerCase()],
-		has: n => n.toLowerCase() in headers.raw
-	}
-});
 
 export default function(url, options) {
 	options = options || {};
@@ -44,5 +30,3 @@ export default function(url, options) {
 		request.send(options.body || null);
 	});
 }
-
-export { response };
