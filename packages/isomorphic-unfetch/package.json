@@ -7,10 +7,12 @@
     "index.d.ts",
     "browser.js"
   ],
+  "license": "MIT",
   "repository": "developit/unfetch",
   "browser": "browser.js",
   "main": "index.js",
   "types": "index.d.ts",
+  "license": "MIT",
   "dependencies": {
     "node-fetch": "^2.2.0",
     "unfetch": "^4.0.0"
