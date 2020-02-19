@@ -1,7 +1,12 @@
 import response from '../../src/lib/response.mjs';
 
 describe('response()', () => {
-	it('returns text()', () => response({ responseText: 'A passing test.' })
+	const raw = { 'x-foo': 'foo', 'x-bar': 'bar' };
+	const keys = Object.keys(raw);
+	const all = Object.entries(raw);
+	const resp = response({}, all, keys, raw);
+
+	it('returns text()', () => response({ responseText: 'A passing test.' }, [], [], {})
 		.text()
 		.then((text) => expect(text).toBe('A passing test.'))
 	);
@@ -12,19 +17,16 @@ describe('response()', () => {
 	);
 
 	it('returns headers', () => {
-		const all = [['x-foo', 'bar'], ['x-baz', 'boo']];
-		const result = response({}, { all }).headers.entries();
-		expect(result).toEqual(all);
+		expect(resp.headers.entries()).toEqual(all);
 	});
 
 	it('returns header keys', () => {
-		const result = response({}, { keys: ['x-foo'] }).headers.keys();
-		expect(result).toEqual(['x-foo']);
+		expect(resp.headers.keys()).toEqual(['x-foo', 'x-bar']);
 	});
 
 	it('returns headers has', () => {
-		const raw = { 'x-foo': 'bar', 'x-baz': 'boo' };
-		const test = response({}, { raw }).headers;
-		expect(test.has('x-foo')).toBe(true);
+		expect(resp.headers.has('x-foo')).toBe(true);
+		expect(resp.headers.has('x-bar')).toBe(true);
+		expect(resp.headers.has('x-baz')).toBe(false);
 	});
 });

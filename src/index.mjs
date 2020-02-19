@@ -10,13 +10,13 @@ export default function(url, options) {
 		request.open(options.method || 'get', url, true);
 
 		request.onload = () => {
-			const head = { all: [], keys: [], raw: {} };
+			const all = [], keys = [], raw = {};
 			request.getAllResponseHeaders().replace(regex, (m, key, value) => {
-				head.all.push([key, value]);
-				head.keys.push(key = key.toLowerCase());
-				head.raw[key] = head.raw[key] ? `${head.raw[key]},${value}` : value;
+				all.push([key, value]);
+				keys.push(key = key.toLowerCase());
+				raw[key] = raw[key] ? `${raw[key]},${value}` : value;
 			});
-			resolve(response(request, head));
+			resolve(response(request, all, keys, raw));
 		};
 
 		request.onerror = reject;
