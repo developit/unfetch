@@ -5,7 +5,7 @@ export default function response (request, headers) {
 		status: request.status,
 		url: request.responseURL,
 		text: () => Promise.resolve(request.responseText),
-		json: () => Promise.resolve(JSON.parse(request.responseText)),
+		json: () => Promise.resolve(request.responseText).then(JSON.parse),
 		blob: () => Promise.resolve(new Blob([request.response])),
 		clone: () => response(request, headers),
 		headers: {
