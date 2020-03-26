@@ -1,5 +1,25 @@
+import { EventEmitter } from 'events';
 import fetch from '../src/index.mjs';
 import fetchDist from '..';
+
+// node does not have abort and signal classes
+class AbortSignal extends EventEmitter {
+	constructor() {
+		super();
+		this.addEventListener = jest.fn((type, callback) => {
+			this.on(type, callback);
+		});
+	}
+}
+
+class AbortController {
+	constructor() {
+		this.signal = new AbortSignal();
+	}
+	abort() {
+		this.signal.emit('abort');
+	}
+}
 
 describe('unfetch', () => {
 	it('should be a function', () => {
@@ -79,6 +99,44 @@ describe('unfetch', () => {
 			xhr.onload();
 
 			return p;
+		});
+
+		it('respects abort signal', () => {
+			let xhrs = [];
+			global.XMLHttpRequest = jest.fn(() => {
+				let xhr = {
+					setRequestHeader: jest.fn(),
+					getAllResponseHeaders: jest.fn().mockReturnValue(''),
+					open: jest.fn(),
+					send: jest.fn(),
+					status: 0,
+					statusText: '',
+					responseText: '',
+					responseURL: '',
+					onabort: () => {},
+					abort: jest.fn(() => xhr.onabort())
+				};
+				xhrs.push(xhr);
+				return xhr;
+			});
+
+			const controller = new AbortController();
+			const p1 = fetch('/foo', { signal: controller.signal });
+			const p2 = fetch('/bar', { signal: controller.signal });
+
+			expect(controller.signal.addEventListener).toHaveBeenCalledTimes(2);
+			expect(controller.signal.addEventListener).toHaveBeenNthCalledWith(1, 'abort', expect.any(Function));
+			expect(controller.signal.addEventListener).toHaveBeenNthCalledWith(2, 'abort', expect.any(Function));
+
+			controller.abort();
+
+			expect(p1).rejects.toThrow(/abort/i);
+			expect(p2).rejects.toThrow(/abort/i);
+
+			expect(xhrs[0].abort).toHaveBeenCalledTimes(1);
+			expect(xhrs[1].abort).toHaveBeenCalledTimes(1);
+
+			return Promise.all([p1.catch(() => {}), p2.catch(() => {})]);
 		});
 	});
 });
