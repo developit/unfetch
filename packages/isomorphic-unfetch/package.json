@@ -12,8 +12,9 @@
   "browser": "browser.js",
   "main": "index.js",
   "types": "index.d.ts",
+  "license": "MIT",
   "dependencies": {
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.2.0",
     "unfetch": "^4.0.0"
   }
 }
