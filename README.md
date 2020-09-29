@@ -43,7 +43,7 @@
 For use with [node](http://nodejs.org) and [npm](https://npmjs.com):
 
 ```sh
-npm install --save unfetch
+npm i unfetch
 ```
 
 Otherwise, grab it from [unpkg.com/unfetch](https://unpkg.com/unfetch/).
@@ -85,7 +85,7 @@ you can import unfetch to use in your code without modifying any globals:
 import fetch from 'unfetch'
 
 // or using CommonJS:
-var fetch = require('unfetch')
+const fetch = require('unfetch')
 
 // usage:
 fetch('/foo.json')
@@ -193,21 +193,19 @@ fetch('/users', {
 
 ```javascript
 fetch('/users')
-  .then( checkStatus )
-  .then( r => r.json() )
-  .then( data => {
-    console.log(data);
-  });
-
-function checkStatus(response) {
-  if (response.ok) {
-    return response;
-  } else {
-    var error = new Error(response.statusText);
+  .then(response => {
+    if (response.ok) {
+      return response;
+    }
+    // convert non-2xx HTTP responses into errors:
+    const error = new Error(response.statusText);
     error.response = response;
     return Promise.reject(error);
-  }
-}
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  });
 ```
 
 * * *
