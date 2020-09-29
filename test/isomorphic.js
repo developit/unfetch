@@ -14,7 +14,7 @@ describe('isomorphic-unfetch', () => {
 				exports: {},
 				require: () => unfetch
 			};
-			sandbox.global = sandbox.window;
+			sandbox.global = sandbox.self = sandbox.window;
 			sandbox.module = { exports: sandbox.exports };
 			let filename = require.resolve('../packages/isomorphic-unfetch/browser');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
@@ -31,7 +31,7 @@ describe('isomorphic-unfetch', () => {
 				exports: {},
 				require: () => unfetch
 			};
-			sandbox.global = sandbox.window;
+			sandbox.global = sandbox.self = sandbox.window;
 			sandbox.module = { exports: sandbox.exports };
 			let filename = require.resolve('../packages/isomorphic-unfetch/browser');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
@@ -52,7 +52,7 @@ describe('isomorphic-unfetch', () => {
 				exports: {},
 				require: () => unfetch
 			};
-			sandbox.global = sandbox.window;
+			sandbox.global = sandbox.self = sandbox.window;
 			sandbox.module = { exports: sandbox.exports };
 			let filename = require.resolve('../packages/isomorphic-unfetch');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
@@ -69,7 +69,7 @@ describe('isomorphic-unfetch', () => {
 				exports: {},
 				require: () => unfetch
 			};
-			sandbox.global = sandbox.window;
+			sandbox.global = sandbox.self = sandbox.window;
 			sandbox.module = { exports: sandbox.exports };
 			let filename = require.resolve('../packages/isomorphic-unfetch');
 			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
