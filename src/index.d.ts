@@ -43,4 +43,4 @@ type Unfetch = (
 
 declare const unfetch: Unfetch;
 
-export default unfetch;
+export = unfetch;
