@@ -34,6 +34,14 @@ export default function(url, options) {
 			resolve(response());
 		};
 
+		if (options.signal) {
+			options.signal.addEventListener('abort', request.abort.bind(request));
+		}
+
+		request.onabort = () => {
+			reject(new DOMException('The user aborted a request.'));
+		};
+
 		request.onerror = reject;
 
 		request.withCredentials = options.credentials=='include';
