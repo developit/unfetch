@@ -1,6 +1,6 @@
 {
   "name": "isomorphic-unfetch",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Switches between unfetch & node-fetch for client & server.",
   "files": [
     "index.js",
@@ -14,6 +14,6 @@
   "types": "index.d.ts",
   "dependencies": {
     "node-fetch": "^2.6.1",
-    "unfetch": "^4.0.0"
+    "unfetch": "^4.2.0"
   }
 }
