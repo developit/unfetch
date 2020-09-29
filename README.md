@@ -192,20 +192,18 @@ fetch('/users', {
   status, define a custom response handler:
 
 ```javascript
-const checkStatus = response => {
-  if (response.ok) {
-    return response;
-  } else {
+fetch('/users')
+  .then(response => {
+    if (response.ok) {
+      return response;
+    }
+    // convert non-2xx HTTP responses into errors:
     const error = new Error(response.statusText);
     error.response = response;
     return Promise.reject(error);
-  }
-}
-
-fetch('/users')
-  .then( checkStatus )
-  .then( r => r.json() )
-  .then( data => {
+  })
+  .then(response => response.json())
+  .then(data => {
     console.log(data);
   });
 ```
