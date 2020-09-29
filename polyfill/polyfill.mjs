@@ -1,2 +1,2 @@
-import unfetch from '../src/index.mjs';
+import unfetch from '..';
 if (!self.fetch) self.fetch = unfetch;
