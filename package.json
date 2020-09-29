@@ -1,6 +1,6 @@
 {
   "name": "unfetch",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "Bare minimum fetch polyfill in 500 bytes",
   "unpkg": "polyfill/index.js",
   "main": "dist/unfetch.js",
