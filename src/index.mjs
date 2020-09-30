@@ -1,37 +1,22 @@
+import response from './lib/response';
+
+const regex = /^(.*?):[^\S\n]*([\s\S]*?)$/gm;
+
 export default function(url, options) {
 	options = options || {};
 	return new Promise( (resolve, reject) => {
 		const request = new XMLHttpRequest();
-		const keys = [];
-		const all = [];
-		const headers = {};
-
-		const response = () => ({
-			ok: (request.status/100|0) == 2,		// 200-299
-			statusText: request.statusText,
-			status: request.status,
-			url: request.responseURL,
-			text: () => Promise.resolve(request.responseText),
-			json: () => Promise.resolve(request.responseText).then(JSON.parse),
-			blob: () => Promise.resolve(new Blob([request.response])),
-			clone: response,
-			headers: {
-				keys: () => keys,
-				entries: () => all,
-				get: n => headers[n.toLowerCase()],
-				has: n => n.toLowerCase() in headers
-			}
-		});
 
 		request.open(options.method || 'get', url, true);
 
 		request.onload = () => {
-			request.getAllResponseHeaders().replace(/^(.*?):[^\S\n]*([\s\S]*?)$/gm, (m, key, value) => {
-				keys.push(key = key.toLowerCase());
+			const all = [], keys = [], raw = {};
+			request.getAllResponseHeaders().replace(regex, (m, key, value) => {
 				all.push([key, value]);
-				headers[key] = headers[key] ? `${headers[key]},${value}` : value;
+				keys.push(key = key.toLowerCase());
+				raw[key] = raw[key] ? `${raw[key]},${value}` : value;
 			});
-			resolve(response());
+			resolve(response(request, all, keys, raw));
 		};
 
 		request.onerror = reject;
