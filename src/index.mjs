@@ -35,6 +35,8 @@ export default function(url, options) {
 		};
 
 		request.onerror = reject;
+		
+		request.ontimeout = reject;
 
 		request.withCredentials = options.credentials=='include';
 
