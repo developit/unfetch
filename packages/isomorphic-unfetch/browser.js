@@ -1,1 +1,1 @@
-module.exports = self.fetch || (self.fetch = require('unfetch').default || require('unfetch'));
+module.exports = global.fetch || (global.fetch = require('unfetch').default || require('unfetch'));
