@@ -112,7 +112,15 @@ describe('isomorphic-unfetch', () => {
 			sandbox.global.process = sandbox.process;
 			sandbox.module = { exports: sandbox.exports };
 			let filename = require.resolve('../packages/isomorphic-unfetch');
-			vm.runInNewContext(fs.readFileSync(filename), sandbox, filename);
+			vm.runInNewContext(fs.readFileSync(filename), sandbox, {
+				filename,
+				importModuleDynamically: () => {
+					const module = new vm.SyntheticModule(['node-fetch'], function() {
+						this.setExport('default', 'I AM NODE-FETCH');
+					  });
+					return module;
+				}
+			});
 
 			expect(sandbox.module.exports('/')).toBe(modules['node-fetch']('/'));
 		});

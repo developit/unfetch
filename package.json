@@ -61,7 +61,7 @@
     "cross-var": "^1.1.0",
     "eslint": "^3.13.1",
     "eslint-config-developit": "^1.1.1",
-    "jest": "^23.6.0",
+    "jest": "^27.4.7",
     "microbundle": "^0.10.1"
   }
 }

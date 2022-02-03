@@ -6,6 +6,8 @@ Switches between [unfetch](https://github.com/developit/unfetch) & [node-fetch](
 
 This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
 
+> Note: This module uses node-fetch 3.x, which is ESM module and requires at least node 12.20.0.
+
 ```sh
 $ npm i isomorphic-unfetch
 ```
