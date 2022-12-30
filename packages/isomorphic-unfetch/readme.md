@@ -6,6 +6,8 @@ Switches between [unfetch](https://github.com/developit/unfetch) & [node-fetch](
 
 This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
 
+> **Note:** This module uses node-fetch 3.x, which is ES Module and requires Node >= 12.20.0.
+
 ```sh
 $ npm i isomorphic-unfetch
 ```
@@ -14,10 +16,10 @@ Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](http
 
 ```javascript
 // using ES6 modules
-import fetch from 'isomorphic-unfetch'
+import fetch from "isomorphic-unfetch";
 
 // using CommonJS modules
-const fetch = require('isomorphic-unfetch')
+const fetch = require("isomorphic-unfetch");
 ```
 
 ## Usage
@@ -25,11 +27,11 @@ const fetch = require('isomorphic-unfetch')
 As a [**ponyfill**](https://ponyfill.com):
 
 ```js
-import fetch from 'isomorphic-unfetch';
+import fetch from "isomorphic-unfetch";
 
-fetch('/foo.json')
-  .then( r => r.json() )
-  .then( data => {
+fetch("/foo.json")
+  .then((r) => r.json())
+  .then((data) => {
     console.log(data);
   });
 ```
@@ -37,13 +39,13 @@ fetch('/foo.json')
 Globally, as a [**polyfill**](https://ponyfill.com/#polyfill):
 
 ```js
-import 'isomorphic-unfetch';
+import "isomorphic-unfetch";
 
 // "fetch" is now installed globally if it wasn't already available
 
-fetch('/foo.json')
-  .then( r => r.json() )
-  .then( data => {
+fetch("/foo.json")
+  .then((r) => r.json())
+  .then((data) => {
     console.log(data);
   });
 ```
