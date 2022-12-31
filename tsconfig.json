@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"noEmit": true,
+		"checkJs": true,
+		"target": "ESNext",
+		"moduleResolution": "Node",
+		"allowSyntheticDefaultImports": true,
+	},
+	"include": [
+		"./**/*.ts"
+	]
+}
