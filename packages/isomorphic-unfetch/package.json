@@ -7,6 +7,17 @@
     "index.d.ts",
     "browser.js"
   ],
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "default": "./index.js"
+    },
+    "./browser": {
+      "import": "./browser.mjs",
+      "default": "./browser.js"
+    },
+    "./package.json": "./package.json"
+  },
   "license": "MIT",
   "repository": "developit/unfetch",
   "browser": "browser.js",

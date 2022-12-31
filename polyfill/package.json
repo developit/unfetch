@@ -1,5 +1,5 @@
 {
   "name": "unfetch-polyfill",
-  "main": "index.js",
-  "module": "polyfill.module.js"
+  "source": "polyfill.mjs",
+  "main": "index.js"
 }
