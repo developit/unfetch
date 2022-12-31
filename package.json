@@ -8,7 +8,7 @@
   "jsnext:main": "./dist/unfetch.mjs",
   "umd:main": "./dist/unfetch.umd.js",
   "scripts": {
-    "test": "eslint && jest",
+    "test": "eslint && NODE_OPTIONS=--experimental-vm-modules jest",
     "build": "microbundle src/index.mjs -f cjs,esm,umd && microbundle polyfill/polyfill.mjs -o polyfill/index.js -f cjs --no-sourcemap && cp dist/unfetch.module.js dist/unfetch.es.js",
     "prepare": "npm run -s build",
     "release": "cross-var npm run build -s && cross-var git commit -am $npm_package_version && cross-var git tag $npm_package_version && git push && git push --tags && npm publish"
@@ -49,9 +49,14 @@
     "extends": "developit"
   },
   "jest": {
-    "testURL": "http://localhost/",
+    "testEnvironmentOptions": {
+      "url": "http://localhost/"
+    },
     "testMatch": [
-      "<rootDir>/test/**/*.?(m)js?(x)"
+      "<rootDir>/test/**/*.test.?(m)js?(x)"
+    ],
+    "setupFiles": [
+      "<rootDir>/test/_setup.js"
     ],
     "moduleFileExtensions": [
       "mjs",
@@ -73,6 +78,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
+    "@types/jest": "^29.2.5",
+    "@types/node": "^18.11.18",
     "cross-var": "^1.1.0",
     "eslint": "^8.30.0",
     "eslint-config-developit": "^1.2.0",
