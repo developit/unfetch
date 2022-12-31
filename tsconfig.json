@@ -5,6 +5,8 @@
 		"target": "ESNext",
 		"moduleResolution": "Node",
 		"allowSyntheticDefaultImports": true,
+		"declaration": false,
+		"declarationDir": null
 	},
 	"include": [
 		"./**/*.ts"
