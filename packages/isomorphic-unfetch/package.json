@@ -4,8 +4,10 @@
   "description": "Switches between unfetch & node-fetch for client & server.",
   "files": [
     "index.js",
+    "index.mjs",
     "index.d.ts",
-    "browser.js"
+    "browser.js",
+    "browser.mjs"
   ],
   "exports": {
     ".": {
