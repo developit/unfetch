@@ -2,11 +2,6 @@
   "name": "isomorphic-unfetch",
   "version": "4.0.1",
   "description": "Switches between unfetch & node-fetch for client & server.",
-  "files": [
-    "index.js",
-    "index.d.ts",
-    "browser.js"
-  ],
   "exports": {
     ".": {
       "import": "./index.mjs",
