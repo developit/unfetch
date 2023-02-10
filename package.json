@@ -15,8 +15,8 @@
   },
   "exports": {
     ".": {
-      "import": "./index.mjs",
-      "default": "./index.js"
+      "import": "./src/index.mjs",
+      "default": "./src/index.mjs"
     },
     "./polyfill": {
       "default": "./polyfill/index.js"
