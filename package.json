@@ -15,8 +15,8 @@
   },
   "exports": {
     ".": {
-      "import": "./index.mjs",
-      "default": "./index.js"
+      "import": "./dist/unfetch.mjs",
+      "default": "./dist/unfetch.js"
     },
     "./polyfill": {
       "default": "./polyfill/index.js"
