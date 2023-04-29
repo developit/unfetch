@@ -4,6 +4,7 @@
   "description": "Switches between unfetch & node-fetch for client & server.",
   "exports": {
     ".": {
+      "types": "./index.d.ts",
       "import": "./index.mjs",
       "default": "./index.js"
     },

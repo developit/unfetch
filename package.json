@@ -15,10 +15,12 @@
   },
   "exports": {
     ".": {
+      "types": "./src/index.d.ts",
       "import": "./index.mjs",
       "default": "./index.js"
     },
     "./polyfill": {
+      "types": "./polyfill/polyfill.d.ts",
       "default": "./polyfill/index.js"
     },
     "./package.json": "./package.json",
