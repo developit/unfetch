@@ -121,6 +121,13 @@ fetch('/bear', {
   open(r.headers.get('location'));
   return r.json();
 })
+
+// fetch image
+fetch('https://i.imgur.com/4AiXzf8.jpg', {
+  responseType: 'blob'
+}).then( r => {
+  return r.blob();
+})
 ```
 
 * * *
@@ -140,6 +147,7 @@ Unfetch will account for the following properties in `options`:
   * `headers`: An `Object` containing additional information to be sent with the request, e.g. `{ 'Content-Type': 'application/json' }` to indicate a JSON-typed request body.
   * `credentials`: ⚠ Accepts a `"include"` string, which will allow both CORS and same origin requests to work with cookies. As pointed in the ['Caveats' section](#caveats), Unfetch won't send or receive cookies otherwise. The `"same-origin"` value is not supported. ⚠
   * `body`: The content to be transmitted in request's body. Common content types include `FormData`, `JSON`, `Blob`, `ArrayBuffer` or plain text.
+  * `responseType`: An enumerated string value specifying the [type](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType) of data contained in the response, the default value of text is used.
 
 ### `response` Methods and Attributes
 These methods are used to handle the response accordingly in your Promise chain. Instead of implementing full spec-compliant [Response Class](https://fetch.spec.whatwg.org/#response-class) functionality, Unfetch provides the following methods and attributes:
