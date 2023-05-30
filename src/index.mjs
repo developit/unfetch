@@ -2,6 +2,9 @@ export default function (url, options) {
 	options = options || {};
 	return new Promise((resolve, reject) => {
 		const request = new XMLHttpRequest();
+		if (options.responseType) {
+			request.responseType = options.responseType;
+		}
 		const keys = [];
 		const headers = {};
 
@@ -12,7 +15,7 @@ export default function (url, options) {
 			url: request.responseURL,
 			text: () => Promise.resolve(request.responseText),
 			json: () => Promise.resolve(request.responseText).then(JSON.parse),
-			blob: () => Promise.resolve(new Blob([request.response])),
+			blob: () => Promise.resolve(new Blob([request.response], {type: request.response.type})),
 			clone: response,
 			headers: {
 				keys: () => keys,
